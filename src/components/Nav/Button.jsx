@@ -9,6 +9,11 @@ const Container = styled.button`
     border-radius: 12px;
     border: none;
     background: transparent; 
+    cursor: pointer;
+    &:hover {
+        /* border-bottom: 4px solid #2B6C00; */
+        background: #58CC02;
+    }
     
 `
 
@@ -24,9 +29,9 @@ const Text = styled.span`
 
 
 
-function Button({Icon, text}) {
+function Button({Icon, text, onClick}) {
     return (
-        <Container>
+        <Container onClick={onClick}>
                 <Icon style={{ width: '15px', height: '15px', fill: '#3F4A36' }}/>
                 <Text>{text}</Text>
         </Container>

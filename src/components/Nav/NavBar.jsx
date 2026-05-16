@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "./Button";
 import DashboardIcon from '@/assets/dashboard.svg?react';
 import QuizIcon from '@/assets/quiz_icon.svg?react';
+import { useNavigate } from "react-router-dom"
 
 const NavBarContainer = styled.div`
     position: fixed;
@@ -42,6 +43,7 @@ const LogoContent = styled.div`
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: 6px;
+    cursor: pointer;
 `
 
 const ButtonContainer = styled.div`
@@ -49,7 +51,7 @@ const ButtonContainer = styled.div`
     padding: 0 8px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2px;
+    gap: 10px;
     flex: 1 0 0;
     align-self: stretch;
 `
@@ -63,12 +65,13 @@ const SubscribeContainer = styled.div`
 `
 
 function NavBar() {
+    const navigate = useNavigate();
     return (
         <NavBarContainer>
-            <LogoContainer><LogoContent>Dujjonku</LogoContent></LogoContainer>
+            <LogoContainer><LogoContent onClick={() => navigate('/')}>Dujjonku</LogoContent></LogoContainer>
             <ButtonContainer>
-                <Button Icon={DashboardIcon} text={"대시보드"}/>
-                <Button Icon={QuizIcon} text={"퀴즈"}/>
+                <Button Icon={DashboardIcon} text={"대시보드"} onClick={() => navigate('/')}/>
+                <Button Icon={QuizIcon} text={"퀴즈"} onClick={() => navigate('/quiz')}/>
             </ButtonContainer>
             <SubscribeContainer></SubscribeContainer>
         </NavBarContainer>
