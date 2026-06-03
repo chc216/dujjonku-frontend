@@ -181,8 +181,8 @@ function TodayWordCard() {
         );
     }
 
-    const handleDetailClick = () => {
-        navigate('/report');
+    const handleDetailClick = (wordId) => {
+        navigate(`/report/${wordId}`);
     };
 
     const nextHandler = () => {
@@ -212,7 +212,7 @@ function TodayWordCard() {
                             <Meaning>"{word.meaning}"</Meaning>
                             <ExampleBox>"{word.example}"</ExampleBox>
 
-                            <DetailButton onClick={handleDetailClick}>
+                            <DetailButton onClick={() => handleDetailClick(word.id)}>
                                 상세 보기
                             </DetailButton>
                         </CarouselSlide>

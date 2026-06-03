@@ -21,7 +21,6 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    /* <GlobalStyle /> */
     <Routes>
       <Route path="/main" element={<Main />} />
       <Route path="/" element={<DashBoard />} />
@@ -30,5 +29,21 @@ function App() {
     </Routes>
   )
 }
+/*
+function App() {
+  return (
+    <>
+      <GlobalStyle />
+
+      <Routes>
+        <Route path="/main" element={<Main />} />
+        <Route path="/" element={<DashBoard />} />
+        <Route path="/report" element={<Report />} />
+        <Route path="/quiz" element={<Quiz />} />
+      </Routes>
+    </>
+  )
+}
+*/
 
 export default App

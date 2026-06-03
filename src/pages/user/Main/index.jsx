@@ -46,10 +46,10 @@ const Padding = styled.div`
 `;
 
 const WordData = Array.from({ length: 30 }, (_, i) => ({
-    keyword: ``,
-    description: "",
-    /* 리액트 아이콘 패키지 설치? -> 팀 회의 */
-    trend: i%3 === 0 ? '상승 그래프' : i%3 === 1 ? '하락 그래프' : '동결'
+    id: i+1,
+    keyword: `test word ${i+1}`,
+    description: "test description",
+    trend: i%3 === 0 ? 'UP' : i%3 === 1 ? 'DOWN' : 'HOLD'
 }));
 
 function Main() {
