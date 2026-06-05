@@ -1,13 +1,23 @@
+import React from "react";
 import styled from "styled-components";
-import Button from "@/components/nav/Button";
-import DashboardIcon from '@/assets/dashboard.svg?react';
-import QuizIcon from '@/assets/quiz_icon.svg?react';
 import { useNavigate } from "react-router-dom"
 import RankingCard from "@/pages/user/DashBoard/RankingCard"
 import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard"
+import Button from "@/components/nav/Button";
+import Contact from "./Contact"
+import TeamMember from "./TeamMember"
+
+/* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
+const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
+    id: i+1,
+    keyword: `트렌드 단어 ${i+1}`,
+    description: "실시간으로 분석된 유행어 설명란",
+    trend: i%3 === 0 ? 'UP' : i%3 === 1 ? 'DOWN' : 'HOLD'
+}));
 
 const PageWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     min-height: 100vh;
     min-width: 100px;
     margin: 0;
@@ -21,6 +31,7 @@ const FixedContainer = styled.div`
     width: 100%; 
     height: 50px;
     padding: 20px 0 10px 0; 
+    align-items: center;
     flex-direction: column;
     justify-content: space-between;
     border-bottom: 4px solid #BECBB1;
@@ -30,132 +41,73 @@ const FixedContainer = styled.div`
     z-index: 1000;
 `;
 
-const RandingLogoContainer = styled.div`
-    display: flex;
-    padding-bottom: 4vh;
-    flex-direction: column;
-    align-items: center;     
-    align-self: stretch;
-`;
-
 const RandingLogoContent = styled.div`
-    display: flex;
-    padding: 0 10%;
-    flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
     color: #2B6C00;
-    text-align: center;
     font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: 2.4rem; 
-    font-style: normal;
+    font-size: 2rem;
     font-weight: 800;
-    line-height: 1.2;
     letter-spacing: 6px;
     cursor: pointer;
 `;
 
 const RandingContainer = styled.div`
     flex: 1;
-    padding: 60px 0;
-    background-color: #ffffff;
     min-width: 600px;
-
-    /* clamp 함수: NavBar의 너비 규칙을 똑같이 따라감 */
-    margin-top: clamp(80px, 50px, 400px);
+    margin-top: 50px;
 `;
 
-const ProjectInfoContainer = styled.div`
-    text-align: center;
-    color: #000000;
-    margin-bottom: 50px;
-
-    h1 {
-        font-size: 300%;
-        font-weight: 1000;
-        margin-top: 0;
-        margin-bottom: 15px;
-    }
-
-`;
-
-const StartButtonContainer = styled.div`
+/* 공통 섹션 스타일 (박스 컨테이너) */
+const SectionBox = styled.section`
+    width: 100%;
+    box-sizing: border-box; /* 여백 포함 100%로 지정 */
+    min-height: 400px;
+    padding: 80px 10%;
     display: flex;
-    padding: 0 8px;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    flex: 1 0 0;
-    align-self: stretch;
-`;
-
-const getCrawlData = (data) => {
-
-};
-
-const TodayWordContainer = styled.div`
+    justify-content: center;
     text-align: center;
-    background-color: #fafafa;
-    color: #000000;
-    width: 100%;
-    padding: 50px 0 50px 0;
 
-    h2 {
-        font-size: 200%;
-        font-weight: 900;
+    /* 얼룩말 무늬 (배경색 흰색, 옅은 회색) */
+    &:nth-child(even) {
+        background-color: #fafafa;
     }
-`;
-
-const TodayWordCardContainer = styled.div`
-    margin: 50px;
-`;
-
-const RankingCardContainer = styled.div`
-    margin: 50px;
-`;
-
-const QuizContainer = styled.div`
-    text-align: center;
-    background-color: #ffffff;
-    color: #000000;
-    width: 100%;
-    padding: 50px 0 50px 0;
+    &:nth-child(odd) {
+        background-color: #ffffff;
+    }
 
     h2 {
+        font-size: 2.5rem;
+        font-weight: 900;
         margin-top: 0;
-        font-size: 200%;
-        font-weight: 900;
+        margin-bottom: 20px;
+        color: #1B1C1C;
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: #3F4A36;
+        margin-bottom: 40px;
     }
 `;
 
-const SubscribeContainer = styled.div`
-    text-align: center;
-    background-color: #fafafa;
-    color: #000000;
-    width: 100%;
-    padding: 50px 0 50px 0;
+const LinkButton = styled.button`
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px #ebe6e6;
+    background-color: #58CC02;
+    transition: background-color 0.2s ease-in-out;
 
-    h2 {
-        font-size: 200%;
-        font-weight: 900;
+    &:hover {
+        background-color: #449705;
     }
 `;
-
-const MemberContainer = styled.div`
-    text-align: center;
-    background-color: #ffffff;
-    color: #000000;
-    width: 100%;
-    padding: 50px 0 50px 0;
-`;
-
-const ContactContainer = styled.div`
-    margin-bottom: 0;
-    text-align: center;
-    background-color: #fafafa;
-    color: #000000;
-    width: 100%;
-`;
-
 
 function Main() {
     const navigate = useNavigate();
@@ -163,51 +115,61 @@ function Main() {
     return (
         <PageWrapper>
             <FixedContainer>
-                <RandingLogoContainer><RandingLogoContent onClick={() => navigate('/dashboard')}>Dujjonku</RandingLogoContent></RandingLogoContainer>
+                <RandingLogoContent onClick={() => navigate('/dashboard')}>Dujjonku</RandingLogoContent>
             </FixedContainer>
+
             <RandingContainer>
-                <ProjectInfoContainer>
-                    <p>소통을 위한 가이드 <b>두쫀쿠</b></p>
-                    <h1>따라가기 벅찬 요즘 유행어,</h1>
-                    <h1>한 눈에 쉽게</h1>
+                <SectionBox>
+                    <p style={{ color: '#2B6C00', fontWeight: 'bold' }}>소통을 위한 가이드 <b>두쫀쿠</b></p>
+                    <h1 style={{ fontSize: '3.5rem', fontWeight: 1000, margin: '0 0 15px 0' }}>
+                        따라가기 벅찬 요즘 유행어,<br />한 눈에 쉽게
+                    </h1>
                     <p>어쩌구저쩌구 프로젝트 2~3줄 소개 + 단어 상세 컴포넌트</p>
-                    <StartButtonContainer></StartButtonContainer>
-                </ProjectInfoContainer>
+                    <LinkButton onClick={() => navigate('/dashboard')}>무료로 시작하기</LinkButton>
+                </SectionBox>
 
-                <TodayWordContainer>
+                <SectionBox>
+                    <h2>실시간 인기 유행어 랭킹</h2>
+                    <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>
+                    <div style={{ width: '100%', maxWidth: '800px' }}>
+                        <RankingCard wordsList={DummyRankingData} isLanding={true} />
+                    </div>
+                </SectionBox>
+
+                <SectionBox>
                     <h2>오늘의 인기 유행어</h2>
-                    <p>한 눈에 쉽게 오늘의 인기 유행어를 확인하세요!</p>
-                    <TodayWordCardContainer><TodayWordCard style={{ margin: '0 0 0 50px'}}/></TodayWordCardContainer>
-                </TodayWordContainer>
+                    <p>매일매일 업데이트되는 인기 유행어를 놓치지마세요!</p>
+                    <div style={{ width: '100%', maxWidth: '800px' }}>
+                        <TodayWordCard />
+                    </div>
+                </SectionBox>
 
-                <QuizContainer>
-                    <p style={{ color: '#ff5e00' }}><b>MINI TEST</b></p>
+                <SectionBox>
+                    <p style={{ color: '#ff5e00', margin: '0 0 10px 0', fontWeight: 'bold' }}><b>MINI TEST</b></p>
                     <h2>나의 MZ력은 몇 점?</h2>
                     <p>유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!</p>
-                </QuizContainer>
+                    <div style={{ border: '2px dashed #ccc', padding: '50px', width: '100%', maxWidth: '800px' }}>QuizCard</div>
+                </SectionBox>
 
-                <SubscribeContainer>
+                <SectionBox>
                     <h2>트렌드에 한발짝 가까워지세요</h2>
                     <p>매일 업데이트되는 새로운 유행어 알림을 받아보세요.</p>
-                </SubscribeContainer>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        알림 카드
+                    </div>
+                </SectionBox>
 
-                <MemberContainer></MemberContainer>
+                <SectionBox>
+                    <TeamMember />
+                </SectionBox>
 
-                <ContactContainer></ContactContainer>
+                <SectionBox style={{ minHeight: '50px', backgroundColor: '#333', color: '#fff', padding: '40px 10%' }}>
+                    <Contact />
+                </SectionBox>
 
             </RandingContainer>
         </PageWrapper>
-    )
+    );
 }
 
 export default Main;
-
-
-/*
-네비게이션 바 (상단 변경? 은 에바) 는 빼자 그냥 메인 로고 버튼만
-프로젝트 소개 (한 줄 소개(대시보드 링크 버튼), 대시보드, 단어, 퀴즈)
-불러온 데이터 양
-이메일 구독 서비스
-팀원 소개
-두쫀쿠 contact
-*/
