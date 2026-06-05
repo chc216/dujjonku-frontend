@@ -3,8 +3,12 @@ import Button from "./Button";
 import DashboardIcon from '@/assets/dashboard.svg?react';
 import QuizIcon from '@/assets/quiz_icon.svg?react';
 import { useNavigate } from "react-router-dom"
+import SubscribeModal from '@/components/SubscribeModal';
+import React, {useState} from 'react';
+import SubscribeIcon from '@/assets/subscribe.svg?react';
 
 const NavBarContainer = styled.div`
+    box-sizing: border-box;//구독알림 서비스 네베게이션바에서 안보여서 추가함.
     position: fixed;
     top: 0;
     left: 0;
@@ -66,6 +70,9 @@ const SubscribeContainer = styled.div`
 
 function NavBar() {
     const navigate = useNavigate();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <NavBarContainer>
             <LogoContainer><LogoContent onClick={() => navigate('/')}>Dujjonku</LogoContent></LogoContainer>
@@ -73,7 +80,10 @@ function NavBar() {
                 <Button Icon={DashboardIcon} text={"대시보드"} onClick={() => navigate('/')}/>
                 <Button Icon={QuizIcon} text={"퀴즈"} onClick={() => navigate('/quiz')}/>
             </ButtonContainer>
-            <SubscribeContainer></SubscribeContainer>
+            <SubscribeContainer>
+                <Button Icon={SubscribeIcon} text="매일 유행어 구독하기" onClick={() => setIsModalOpen(true)}/>
+            </SubscribeContainer>
+            {isModalOpen && <SubscribeModal onClose={() => setIsModalOpen(false)} />}
         </NavBarContainer>
     )
 }
