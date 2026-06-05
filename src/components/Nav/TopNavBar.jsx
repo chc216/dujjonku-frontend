@@ -46,7 +46,7 @@ function TopNavBar(props) {
               fill: "#3F4A36",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard")}
           ></Arrow>
           <Title>{props.title}</Title>
         </ContentContainer>
