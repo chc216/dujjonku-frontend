@@ -39,6 +39,7 @@ function Report({ wordId }) {
       week12: 40,
     },
     isNew: false,
+    trend: "cold",
   };
 
   return (
@@ -48,6 +49,7 @@ function Report({ wordId }) {
           word={dummy.name}
           example={dummy.example}
           isNew={dummy.isNew}
+          trend={dummy.trend}
         ></HeaderSection>
         <ContentSection>
           <InfoSection meaning={dummy.meaning}></InfoSection>

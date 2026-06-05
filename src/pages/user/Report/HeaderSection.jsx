@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { FiTrendingUp, FiTrendingDown, FiMinus } from "react-icons/fi";
 const Container = styled.div`
   padding-left: 4%;
   display: flex;
@@ -60,12 +60,34 @@ const Example = styled.div`
   line-height: 24px;
 `;
 
-function HeaderSection({ word, example, isNew }) {
+function HeaderSection({ word, example, isNew, trend }) {
+  console.log(trend);
+  const getTrendIcon = (trend) => {
+    switch (trend) {
+      case "hot":
+        return <FiTrendingUp color="#c43434" size="40" strokeWidth={3} />;
+      case "cold":
+        return <FiTrendingDown color="#4134bb" size="40" strokeWidth={3} />;
+      case "neutral":
+        return <FiMinus color="#18762a" size="40" strokeWidth={3} />;
+    }
+  };
   return (
     <>
       <Container>
         <Tag>{isNew ? "최신 유행 단어" : "과거에 유행하던 단어"}</Tag>
-        <Word>{word}</Word>
+        <Word>
+          {word}
+          <div
+            style={{
+              paddingLeft: "20px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {getTrendIcon(trend)}
+          </div>
+        </Word>
         <Example>{example}</Example>
       </Container>
     </>
