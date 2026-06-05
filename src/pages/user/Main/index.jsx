@@ -1,73 +1,173 @@
-import NavBar from "@/components/Nav/NavBar";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import RankingCard from "@/pages/user/Main/RankingCard"
-import TodayWordCard from "@/pages/user/Main/TodayWordCard"
+import { useNavigate } from "react-router-dom"
+import RankingCard from "@/pages/user/DashBoard/RankingCard"
+import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard"
+import Button from "@/components/nav/Button";
+import Contact from "./Contact"
+import TeamMember from "./TeamMember"
 
-const PageWrapper = styled.div`
-    display: flex;
-    min-height: 100vh;
-    margin: 0;
-`;
-
-const ContentWrapper = styled.main`
-    flex: 1;
-    padding: 40px;
-    background-color: #FBF9F8;
-
-    /* clamp 함수: NavBar의 너비 규칙을 똑같이 따라감 */
-    margin-left: clamp(200px, 24vw, 350px);
-
-    /* 이후 모바일 화면도 추가해야할듯 */
-`;
-
-const HeaderContent = styled.div`    
-    div {
-        color: #1B1C1C;
-        font-family: "Plus Jakarta Sans";
-        font-size: 32px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 125%;
-    }
-    
-    p {
-        color: #3F4A36;
-        font-family: "Nunito Sans";
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 144.444%;
-    }
-`;
-
-const Padding = styled.div`
-    height: 35px;
-`;
-
-const WordData = Array.from({ length: 30 }, (_, i) => ({
+/* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
+const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
     id: i+1,
-    keyword: `test word ${i+1}`,
-    description: "test description",
+    keyword: `트렌드 단어 ${i+1}`,
+    description: "실시간으로 분석된 유행어 설명란",
     trend: i%3 === 0 ? 'UP' : i%3 === 1 ? 'DOWN' : 'HOLD'
 }));
 
+const PageWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 100px;
+    margin: 0;
+`;
+
+const FixedContainer = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%; 
+    height: 50px;
+    padding: 20px 0 10px 0; 
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 4px solid #BECBB1;
+    background: #F5F3F3;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    min-width: 100px;
+    z-index: 1000;
+`;
+
+const RandingLogoContent = styled.div`
+    margin: 0 auto;
+    color: #2B6C00;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 6px;
+    cursor: pointer;
+`;
+
+const RandingContainer = styled.div`
+    flex: 1;
+    min-width: 600px;
+    margin-top: 50px;
+`;
+
+/* 공통 섹션 스타일 (박스 컨테이너) */
+const SectionBox = styled.section`
+    width: 100%;
+    box-sizing: border-box; /* 여백 포함 100%로 지정 */
+    min-height: 400px;
+    padding: 80px 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* 얼룩말 무늬 (배경색 흰색, 옅은 회색) */
+    &:nth-child(even) {
+        background-color: #fafafa;
+    }
+    &:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #1B1C1C;
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: #3F4A36;
+        margin-bottom: 40px;
+    }
+`;
+
+const LinkButton = styled.button`
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px #ebe6e6;
+    background-color: #58CC02;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #449705;
+    }
+`;
+
 function Main() {
+    const navigate = useNavigate();
+
     return (
         <PageWrapper>
-            <NavBar />
-            <ContentWrapper>
-                <HeaderContent>
-                    <div>오늘도 트랜디해질 시간이에요!</div>
-                    <p>오늘의 유행어, 함께 알아볼까요?</p>
-                </HeaderContent>
-                <Padding />
+            <FixedContainer>
+                <RandingLogoContent onClick={() => navigate('/dashboard')}>Dujjonku</RandingLogoContent>
+            </FixedContainer>
 
-                <TodayWordCard />
-                <Padding />
+            <RandingContainer>
+                <SectionBox>
+                    <p style={{ color: '#2B6C00', fontWeight: 'bold' }}>소통을 위한 가이드 <b>두쫀쿠</b></p>
+                    <h1 style={{ fontSize: '3.5rem', fontWeight: 1000, margin: '0 0 15px 0' }}>
+                        따라가기 벅찬 요즘 유행어,<br />한 눈에 쉽게
+                    </h1>
+                    <p>어쩌구저쩌구 프로젝트 2~3줄 소개 + 단어 상세 컴포넌트</p>
+                    <LinkButton onClick={() => navigate('/dashboard')}>무료로 시작하기</LinkButton>
+                </SectionBox>
 
-                <RankingCard wordsList={WordData} />
-            </ContentWrapper>
+                <SectionBox>
+                    <h2>실시간 인기 유행어 랭킹</h2>
+                    <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>
+                    <div style={{ width: '100%', maxWidth: '800px' }}>
+                        <RankingCard wordsList={DummyRankingData} isLanding={true} />
+                    </div>
+                </SectionBox>
+
+                <SectionBox>
+                    <h2>오늘의 인기 유행어</h2>
+                    <p>매일매일 업데이트되는 인기 유행어를 놓치지마세요!</p>
+                    <div style={{ width: '100%', maxWidth: '800px' }}>
+                        <TodayWordCard />
+                    </div>
+                </SectionBox>
+
+                <SectionBox>
+                    <p style={{ color: '#ff5e00', margin: '0 0 10px 0', fontWeight: 'bold' }}><b>MINI TEST</b></p>
+                    <h2>나의 MZ력은 몇 점?</h2>
+                    <p>유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!</p>
+                    <div style={{ border: '2px dashed #ccc', padding: '50px', width: '100%', maxWidth: '800px' }}>QuizCard</div>
+                </SectionBox>
+
+                <SectionBox>
+                    <h2>트렌드에 한발짝 가까워지세요</h2>
+                    <p>매일 업데이트되는 새로운 유행어 알림을 받아보세요.</p>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        알림 카드
+                    </div>
+                </SectionBox>
+
+                <SectionBox>
+                    <TeamMember />
+                </SectionBox>
+
+                <SectionBox style={{ minHeight: '50px', backgroundColor: '#333', color: '#fff', padding: '40px 10%' }}>
+                    <Contact />
+                </SectionBox>
+
+            </RandingContainer>
         </PageWrapper>
     );
 }

@@ -69,6 +69,7 @@ const SubscribeContainer = styled.div`
 `;
 
 function NavBar() {
+
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
