@@ -2,12 +2,21 @@ import styled from "styled-components";
 import ReactApexChart from "react-apexcharts";
 import { useEffect, useRef } from "react";
 import FrequencyChart from "@/components/FrequencyChart";
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+`;
 
 const Card = styled.div`
-  width: 616px;
-  height: 370px;
-  background: #fff;
+  width: 932px; /* InfoSection 두 카드(456*2) + gap(20) = 932 */
+  height: 350px;
+
   border-radius: 16px;
+  border-bottom: 1px solid #e4e2e2;
+  border-left: 1px solid #e4e2e2;
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.05),
     0 2px 4px -1px rgba(0, 0, 0, 0.03);
@@ -24,7 +33,7 @@ const Title = styled.div`
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 16px;
-  margin-left: 5%;
+  margin-left: 2%;
   flex-shrink: 0;
 `;
 
@@ -35,12 +44,17 @@ const ChartArea = styled.div`
 
 function ChartSection({ frequency }) {
   return (
-    <Card>
-      <Title>유행어 사용 빈도</Title>
-      <ChartArea>
-        <FrequencyChart frequency={frequency} />
-      </ChartArea>
-    </Card>
+    <>
+      <Container>
+        <Card>
+          <Title>유행어 사용 빈도</Title>
+          <ChartArea>
+            <FrequencyChart frequency={frequency} />
+          </ChartArea>
+        </Card>
+        <div style={{ width: "20%" }}></div>
+      </Container>
+    </>
   );
 }
 
