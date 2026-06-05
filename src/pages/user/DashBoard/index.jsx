@@ -1,8 +1,8 @@
 import NavBar from "@/components/Nav/NavBar";
 import React, { useState } from "react";
 import styled from "styled-components";
-import RankingCard from "@/pages/user/Dashboard/RankingCard"
-import TodayWordCard from "@/pages/user/Dashboard/TodayWordCard"
+import RankingCard from "@/pages/user/DashBoard/RankingCard"
+import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard"
 
 const PageWrapper = styled.div`
     display: flex;
@@ -52,7 +52,7 @@ const WordData = Array.from({ length: 30 }, (_, i) => ({
     trend: i%3 === 0 ? 'UP' : i%3 === 1 ? 'DOWN' : 'HOLD'
 }));
 
-function Dashboard() {
+function DashBoard() {
     return (
         <PageWrapper>
             <NavBar />

@@ -68,9 +68,9 @@ function NavBar() {
     const navigate = useNavigate();
     return (
         <NavBarContainer>
-            <LogoContainer><LogoContent onClick={() => navigate('/')}>Dujjonku</LogoContent></LogoContainer>
+            <LogoContainer><LogoContent onClick={() => navigate('/dashboard')}>Dujjonku</LogoContent></LogoContainer>
             <ButtonContainer>
-                <Button Icon={DashboardIcon} text={"대시보드"} onClick={() => navigate('/')}/>
+                <Button Icon={DashboardIcon} text={"대시보드"} onClick={() => navigate('/dashboard')}/>
                 <Button Icon={QuizIcon} text={"퀴즈"} onClick={() => navigate('/quiz')}/>
             </ButtonContainer>
             <SubscribeContainer></SubscribeContainer>
