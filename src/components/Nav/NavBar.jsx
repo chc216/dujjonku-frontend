@@ -69,7 +69,6 @@ const SubscribeContainer = styled.div`
 `;
 
 function NavBar() {
-
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,13 +76,15 @@ function NavBar() {
   return (
     <NavBarContainer>
       <LogoContainer>
-        <LogoContent onClick={() => navigate("/")}>Dujjonku</LogoContent>
+        <LogoContent onClick={() => navigate("/dashboard")}>
+          Dujjonku
+        </LogoContent>
       </LogoContainer>
       <ButtonContainer>
         <Button
           Icon={DashboardIcon}
           text={"대시보드"}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/dashboard")}
         />
         <Button
           Icon={QuizIcon}
