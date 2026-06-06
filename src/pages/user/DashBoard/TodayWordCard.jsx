@@ -139,12 +139,13 @@ function TodayWordCard() {
     const [current, setCurrent] = useState(0);  // 캐러셀 변환 번호 상태
     const [words, setWords] = useState([]);     // 백엔드에서 받아온 단어 리스트
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+    const [isHovered, setIsHovered] = useState(false); // 사용자가 hover중에는 자동 슬라이드 멈추기 위한 코드 추가
 
     useEffect(() => {
         const fetchTodayWords = async () => {
             try {
                 /* 스프링부트 URL (오늘의 유행어) 채워넣기 */
-                const response = await axios.get("");
+                const response = await axios.get("http://localhost:8080");
 
                 /* 데이터가 배열이고, 내용이 있다면 서버 데이터 사용 */
                 if (Array.isArray(response.data) && response.data.length > 0) {
@@ -164,6 +165,19 @@ function TodayWordCard() {
         };
         fetchTodayWords();
     }, []);
+
+    /* 3초마다 슬라이드 자동으로 넘겨주는 효과 추가 */
+    useEffect(() => {
+        /* 3초마다 슬라이드 자동으로 넘겨주는 효과 추가 */
+        if (words.length === 0 || isLoading || isHovered) return;
+
+        const timer = setInterval(() => {
+            setCurrent((prev) => (prev === words.length-1 ? 0 : prev+1));
+        }, 3000); // 3000ms
+
+        /* 상태 바뀔 때 타이머를 클리어시킴 */
+        return () => clearInterval(timer);
+    }, [words, isLoading, isHovered]);
 
     /* 데이터를 불러오는 중일 때 */
     if (isLoading) {
@@ -196,7 +210,10 @@ function TodayWordCard() {
     };
 
     return (
-        <CardContainer>
+        <CardContainer
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <ArrowButton $direction="left" onClick={prevHandler}>
                 <span>&lt;</span> {/* 나중에 아이콘으로 변경하는게 좋을듯 */}
             </ArrowButton>

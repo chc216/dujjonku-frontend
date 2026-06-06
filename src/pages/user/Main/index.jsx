@@ -7,9 +7,8 @@ import Button from "@/components/nav/Button";
 import Contact from "./Contact"
 import TeamMember from "./TeamMember"
 import SubscribeCard from "./SubscribeCard";
-
+import HeroSection from "./HeroSection";
 import QuizCard from "@/pages/user/Quiz/QuizCard";
-import { motion } from "motion/react";
 
 /* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
 const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
@@ -96,32 +95,9 @@ const SectionBox = styled.section`
   }
 `;
 
-const LinkButton = styled.button`
-  padding: 15px 30px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #ffffff;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 5px 5px 10px #ebe6e6;
-  background-color: #58cc02;
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #449705;
-  }
-`;
-
-const Char = styled(motion.span)`
-  display: inline-block;
-  color: #2b6c00;
-`;
-
 function Main() {
   const navigate = useNavigate();
 
-  const animatedWord = "유행어";
   return (
     <PageWrapper>
       <FixedContainer>
@@ -130,50 +106,15 @@ function Main() {
         </RandingLogoContent>
       </FixedContainer>
 
-      <RandingContainer>
+    <RandingContainer>
+        <HeroSection heroWords={DummyRankingData.slice(0, 4)} />
+        
         <SectionBox>
-          <p style={{ color: "#2B6C00", fontWeight: "bold" }}>
-            소통을 위한 가이드 <b>두쫀쿠</b>
-          </p>
-          <h1
-            style={{
-              fontSize: "3.5rem",
-              fontWeight: 1000,
-              margin: "0 0 15px 0",
-            }}
-          >
-            따라가기 벅찬 요즘{" "}
-            {animatedWord.split("").map((char, i) => (
-              <Char
-                key={i}
-                animate={{ opacity: [0, 1, 1, 0] }}
-                transition={{
-                  duration: 3,
-                  times: [0, 0.1, 0.9, 1],
-                  delay: i * 0.2,
-                  repeat: Infinity,
-                  repeatDelay: 0.5,
-                  ease: "easeInOut",
-                }}
-              >
-                {char}
-              </Char>
-            ))}
-            ,
-            <br />한 눈에 쉽게
-          </h1>
-          <p>어쩌구저쩌구 프로젝트 2~3줄 소개 + 단어 상세 컴포넌트</p>
-          <LinkButton onClick={() => navigate("/dashboard")}>
-            무료로 시작하기
-          </LinkButton>
-        </SectionBox>
-
-        <SectionBox>
-          <h2>실시간 인기 유행어 랭킹</h2>
-          <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>
-          <div style={{ width: "100%", maxWidth: "800px" }}>
-            <RankingCard wordsList={DummyRankingData} isLanding={true} />
-          </div>
+            <h2>실시간 인기 유행어 랭킹</h2>
+            <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>
+            <div style={{ width: '100%', maxWidth: '800px' }}>
+                <RankingCard wordsList={DummyRankingData} isLanding={true} />
+            </div>
         </SectionBox>
 
         <SectionBox>
