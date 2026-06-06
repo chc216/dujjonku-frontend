@@ -68,7 +68,13 @@ const SubscribeContainer = styled.div`
   align-items: flex-start;
   align-self: stretch;
 `;  
- return (
+
+function NavBar() {
+    
+    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    return (
     <NavBarContainer>
       <LogoContainer>
         <LogoContent onClick={() => navigate("/dashboard")}>
@@ -102,5 +108,7 @@ const SubscribeContainer = styled.div`
       {isModalOpen && <SubscribeModal onClose={() => setIsModalOpen(false)} />}
     </NavBarContainer>
   );
+}
+
 
 export default NavBar;
