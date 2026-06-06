@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom"
-import RankingCard from "@/pages/user/DashBoard/RankingCard"
-import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard"
+import { useNavigate } from "react-router-dom";
+import RankingCard from "@/pages/user/DashBoard/RankingCard";
+import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard";
 import Button from "@/components/nav/Button";
-import Contact from "./Contact"
-import TeamMember from "./TeamMember"
+import Contact from "./Contact";
+import TeamMember from "./TeamMember";
+import HeroSection from "./HeroSection";
 
 /* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
 const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
@@ -92,23 +93,6 @@ const SectionBox = styled.section`
     }
 `;
 
-const LinkButton = styled.button`
-    padding: 15px 30px;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #ffffff;
-    cursor: pointer;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 5px 5px 10px #ebe6e6;
-    background-color: #58CC02;
-    transition: background-color 0.2s ease-in-out;
-
-    &:hover {
-        background-color: #449705;
-    }
-`;
-
 function Main() {
     const navigate = useNavigate();
 
@@ -119,15 +103,8 @@ function Main() {
             </FixedContainer>
 
             <RandingContainer>
-                <SectionBox>
-                    <p style={{ color: '#2B6C00', fontWeight: 'bold' }}>소통을 위한 가이드 <b>두쫀쿠</b></p>
-                    <h1 style={{ fontSize: '3.5rem', fontWeight: 1000, margin: '0 0 15px 0' }}>
-                        따라가기 벅찬 요즘 유행어,<br />한 눈에 쉽게
-                    </h1>
-                    <p>어쩌구저쩌구 프로젝트 2~3줄 소개 + 단어 상세 컴포넌트</p>
-                    <LinkButton onClick={() => navigate('/dashboard')}>무료로 시작하기</LinkButton>
-                </SectionBox>
-
+                <HeroSection heroWords={DummyRankingData.slice(0, 4)} />
+                
                 <SectionBox>
                     <h2>실시간 인기 유행어 랭킹</h2>
                     <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>

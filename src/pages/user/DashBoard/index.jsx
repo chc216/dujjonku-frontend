@@ -1,6 +1,7 @@
 import NavBar from "@/components/Nav/NavBar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import RankingCard from "@/pages/user/DashBoard/RankingCard"
 import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard"
 
@@ -45,14 +46,40 @@ const Padding = styled.div`
     height: 35px;
 `;
 
-const WordData = Array.from({ length: 30 }, (_, i) => ({
+/* 서버 통신 실패 시 나타나는 더미 데이터 */
+const fallbackWordData = Array.from({ length: 30 }, (_, i) => ({
     id: i+1,
-    keyword: `test word ${i+1}`,
-    description: "test description",
+    keyword: `서버 연결 대기중 ${i+1}`,
+    description: "백엔드 서버 켜주세요!",
     trend: i%3 === 0 ? 'UP' : i%3 === 1 ? 'DOWN' : 'HOLD'
 }));
 
 function DashBoard() {
+    const [rankingData, setRankingData] = useState([]);
+
+    useEffect(() => {
+        const fetchRanking = async () => {
+            try {
+                /* 스프링부트 URL (랭킹) 채워넣기 */
+                const response = await axios.get("http://localhost:8080");
+
+                /* 데이터가 배열이고, 내용이 있다면 서버 데이터 사용 */
+                if (Array.isArray(response.data) && response.data.length > 0) {
+                    setRankingData(response.data);
+                } else {
+                    /* 텅 빈 리스트라면 더미 데이터로 대체 */
+                    console.warn("데이터가 비어있음. (더미데이터)");
+                    setRankingData(fallbackWordData);
+                }
+            } catch (error) {
+                /* 서버가 죽었을 경우 더미 데이터로 대체 */
+                console.error("API 통신 실패. :", error);
+                setRankingData(fallbackWordData);
+            }
+        };
+        fetchRanking();
+    }, []);
+
     return (
         <PageWrapper>
             <NavBar />
@@ -66,7 +93,7 @@ function DashBoard() {
                 <TodayWordCard />
                 <Padding />
 
-                <RankingCard wordsList={WordData} />
+                <RankingCard wordsList={rankingData} isLanding={false} />
             </ContentWrapper>
         </PageWrapper>
     );
