@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const HeroSectionWrapper = styled.section`
     width: 100%;
@@ -33,6 +34,11 @@ const HeroTitle = styled.h1`
     line-height: 1.3;
     color: #1B1C1C;
     margin: 0 0 20px 0;
+`;
+
+const Char = styled(motion.span)`
+  display: inline-block;
+  color: #2b6c00;
 `;
 
 const HeroDescription = styled.p`
@@ -119,6 +125,8 @@ const MiniTrendCard = styled.div`
 function HeroSection({ heroWords }) {
     const navigate = useNavigate();
 
+    const animatedWord = "유행어";
+
     const truncateText = (text, maxLength) => {
         if (!text) return "";
         return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
@@ -129,8 +137,26 @@ function HeroSection({ heroWords }) {
             <HeroTextContent>
                 <HeroBadge>소통을 위한 가이드 <b>두쫀쿠</b></HeroBadge>
                 <HeroTitle>
-                    따라가기 벅찬 요즘 유행어,<br />한 눈에 쉽게
+                    따라가기 벅찬 요즘 {" "}
+                {animatedWord.split("").map((char, i) => (
+                    <Char
+                        key={i}
+                        animate={{ opacity: [0, 1, 1, 0] }}
+                        transition={{
+                        duration: 3,
+                        times: [0, 0.1, 0.9, 1],
+                        delay: i * 0.2,
+                        repeat: Infinity,
+                        repeatDelay: 0.5,
+                        ease: "easeInOut",
+                        }}
+                    >
+                        {char}
+                    </Char>
+                ))}
+                ,<br />한 눈에 쉽게
                 </HeroTitle>
+                
                 <HeroDescription>
                     실시간 트렌드부터 정확한 뜻과 예문까지!<br />
                     세대 간의 언어 장벽을 허물고 소통을 시작해 보세요.

@@ -56,6 +56,14 @@ function QuizCard() {
                 </>
             );
         }
+
+        if (!quizzes || quizzes.length === 0 || quizzes[0] === undefined) {
+            return (
+                <div style={{ padding: '50px', textAlign: 'center', color: '#888' }}>
+                    퀴즈 데이터 못 불러옴
+                </div>
+            );
+        }
     
         const totalQuestionNum = quizzes.length;//전체 문제 개수
         const currentQuestion = quizzes[currentIndex];//현재 문제인 객체를 담고 있는 변수
@@ -96,6 +104,7 @@ function QuizCard() {
                 alert("모든 퀴즈 풀이를 완료했습니다!");
             }
         };
+
     return (
         <QuizContainer>
             <QuestionCard question={currentQuestion.question} />

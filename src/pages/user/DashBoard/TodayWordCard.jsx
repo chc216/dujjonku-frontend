@@ -145,7 +145,7 @@ function TodayWordCard() {
         const fetchTodayWords = async () => {
             try {
                 /* 스프링부트 URL (오늘의 유행어) 채워넣기 */
-                const response = await axios.get("http://localhost:8080");
+                const response = await axios.get("http://localhost:8080/");
 
                 /* 데이터가 배열이고, 내용이 있다면 서버 데이터 사용 */
                 if (Array.isArray(response.data) && response.data.length > 0) {
