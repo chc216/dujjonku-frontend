@@ -130,7 +130,7 @@ const getTrendIcon = (trend) => {
     }
 };
 
-function RankingCard({ wordsList }) {
+function RankingCard({ wordsList, isLanding }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const navigate = useNavigate();
 
@@ -145,11 +145,11 @@ function RankingCard({ wordsList }) {
 
     return (
         <Ranking>
-            <h3>인기 유행어 랭킹</h3>
+            {!isLanding && <h3>인기 유행어 랭킹</h3>}
 
-            <ExpandableWrapper $isExpanded={isExpanded}>
+            <ExpandableWrapper $isExpanded={isLanding ? true : isExpanded}>
                 <RankingItem>
-                    {wordsList.map((word, index) => (
+                    {(wordsList && isLanding ? wordsList.slice(0, 10) : wordsList)?.map((word, index) => (
                         <ClickWord key={index} onClick={() => handleWordClick(word)}>
                             <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
                                 <RankingBadge rank={index+1}>{index+1}</RankingBadge>
@@ -167,9 +167,11 @@ function RankingCard({ wordsList }) {
                 </RankingItem>
             </ExpandableWrapper>
 
-            <ExpandButton onClick={() => setIsExpanded(!isExpanded)}>
-                {isExpanded ? '접기 ↑' : '전체 순위 보기 ↓'}
-            </ExpandButton>
+            {!isLanding && (
+                <ExpandButton onClick={() => setIsExpanded(!isExpanded)}>
+                    {isExpanded ? '접기 ↑' : '전체 순위 보기 ↓'}
+                </ExpandButton>
+            )}
         </Ranking>
     );
 }

@@ -23,7 +23,6 @@ const WordTitle = styled.h1`
 
 const Meaning = styled.p`
     font-size: 18px;
-    margin-right: 35px;
     color: #1B1C1C;
     margin: 0 0 25px 0;
 `;
@@ -32,11 +31,11 @@ const ExampleBox = styled.div`
     background-color: #F5F3F3;
     border-left: 5px solid #2B6C00;
     padding: 20px;
-    margin-right: 35px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px;
     font-size: 16px;
     color: #3F4A36;
-    margin-bottom: 30px;
+    margin: 0 0 30px 0;
+    width: 80%;
 `;
 
 const DetailButton = styled.button`
@@ -71,7 +70,6 @@ const CarouselWindow = styled.div`
     position: relative;
     z-index: 1;
     width: 100%;
-    padding: 0 30px;
 `;
 
 const CarouselTrack = styled.div`
@@ -83,7 +81,11 @@ const CarouselTrack = styled.div`
 const CarouselSlide = styled.div`
     min-width: 100%;
     box-sizing: border-box;
-    padding-right: 20px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 `;
 
 const ArrowButton = styled.button`
