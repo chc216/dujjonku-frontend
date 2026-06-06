@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import SubscribeModal from '@/components/SubscribeModal';
 import React, {useState} from 'react';
 import SubscribeIcon from '@/assets/subscribe.svg?react';
+import AdminIcon from '@/assets/admin.svg?react';
 
 const NavBarContainer = styled.div`
     box-sizing: border-box;//구독알림 서비스 네베게이션바에서 안보여서 추가함.
@@ -79,6 +80,7 @@ function NavBar() {
             <ButtonContainer>
                 <Button Icon={DashboardIcon} text={"대시보드"} onClick={() => navigate('/')}/>
                 <Button Icon={QuizIcon} text={"퀴즈"} onClick={() => navigate('/quiz')}/>
+                <Button Icon={AdminIcon} text={"관리자"} onClick={() => navigate('/admin/login')}/>
             </ButtonContainer>
             <SubscribeContainer>
                 <Button Icon={SubscribeIcon} text="매일 유행어 구독하기" onClick={() => setIsModalOpen(true)}/>
