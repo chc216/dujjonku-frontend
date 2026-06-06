@@ -39,4 +39,9 @@ npm install
 npm run dev
 ```
 
+
+
+**`http://localhost:5173` 에서 랜딩페이지를 확인할 수 있습니다.**
+
+
 > 백엔드 서버(`http://localhost:8080`)가 함께 실행 중이어야 데이터가 정상적으로 표시됩니다.
