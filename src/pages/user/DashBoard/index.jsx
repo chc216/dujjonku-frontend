@@ -2,9 +2,11 @@ import NavBar from "@/components/Nav/NavBar";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import RankingCard from "@/pages/user/DashBoard/RankingCard"
-import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard"
+import RankingCard from "@/pages/user/DashBoard/RankingCard";
+import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard";
+import PageLayout from "@/components/layout/PageLayout"
 
+/* PageLayout으로 인한 삭제
 const PageWrapper = styled.div`
     display: flex;
     min-height: 100vh;
@@ -16,11 +18,10 @@ const ContentWrapper = styled.main`
     padding: 40px;
     background-color: #FBF9F8;
 
-    /* clamp 함수: NavBar의 너비 규칙을 똑같이 따라감 */
+    // clamp 함수: NavBar의 너비 규칙을 똑같이 따라감
     margin-left: clamp(200px, 24vw, 350px);
-
-    /* 이후 모바일 화면도 추가해야할듯 */
 `;
+*/
 
 const HeaderContent = styled.div`    
     div {
@@ -81,21 +82,18 @@ function DashBoard() {
     }, []);
 
     return (
-        <PageWrapper>
-            <NavBar />
-            <ContentWrapper>
-                <HeaderContent>
-                    <div>오늘도 트랜디해질 시간이에요!</div>
-                    <p>오늘의 유행어, 함께 알아볼까요?</p>
-                </HeaderContent>
-                <Padding />
+        <PageLayout title="대시보드">
+            <HeaderContent>
+                <div>오늘도 트랜디해질 시간이에요!</div>
+                <p>오늘의 유행어, 함께 알아볼까요?</p>
+            </HeaderContent>
+            <Padding />
 
-                <TodayWordCard />
-                <Padding />
+            <TodayWordCard />
+            <Padding />
 
-                <RankingCard wordsList={rankingData} isLanding={false} />
-            </ContentWrapper>
-        </PageWrapper>
+            <RankingCard wordsList={rankingData} isLanding={false} />
+        </PageLayout>
     );
 }
 
