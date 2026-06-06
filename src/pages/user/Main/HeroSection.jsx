@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import FrequencyChart from "@/components/FrequencyChart";
+
 const HeroSectionWrapper = styled.section`
   width: 100%;
   box-sizing: border-box;
-  padding: 100px 10%;
+  padding: 100px 15% 100px 10%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -247,7 +248,7 @@ function HeroSection() {
           소통을 위한 가이드 <b>두쫀쿠</b>
         </HeroBadge>
         <HeroTitle>
-          따라가기 벅찬 요즘{" "}
+          따라가기 벅찬 요즘<br/>{" "}
           {animatedWord.split("").map((char, i) => (
             <Char
               key={i}
