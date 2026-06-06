@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import RankingCard from "@/pages/user/DashBoard/RankingCard";
 import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard";
 import Button from "@/components/nav/Button";
+import Contact from "./Contact"
+import TeamMember from "./TeamMember"
+import SubscribeCard from "./SubscribeCard";
+
+import QuizCard from "@/pages/user/Quiz/QuizCard";
 import Contact from "./Contact";
 import TeamMember from "./TeamMember";
 import { motion } from "motion/react";
@@ -193,22 +198,17 @@ function Main() {
           </p>
           <h2>나의 MZ력은 몇 점?</h2>
           <p>유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!</p>
-          <div
-            style={{
-              border: "2px dashed #ccc",
-              padding: "50px",
-              width: "100%",
-              maxWidth: "800px",
-            }}
-          >
-            QuizCard
+          <div style={{ width: '100%', maxWidth: '800px' }}>
+                        <TodayWordCard />
           </div>
         </SectionBox>
 
         <SectionBox>
           <h2>트렌드에 한발짝 가까워지세요</h2>
           <p>매일 업데이트되는 새로운 유행어 알림을 받아보세요.</p>
-          <div style={{ display: "flex", gap: "10px" }}>알림 카드</div>
+          <div style={{ width: '100%' }}>
+                        <SubscribeCard/>
+          </div>
         </SectionBox>
 
         <SectionBox>
