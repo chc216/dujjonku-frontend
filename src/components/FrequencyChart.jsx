@@ -7,6 +7,7 @@ function FrequencyChart({
   ygrid_show = true,
   show_axis = true,
 }) {
+  if (!frequency || Object.keys(frequency).length === 0) return null;
   const entries = Object.entries(frequency).reverse();
   const list = [{ name: "빈도수", data: entries.map(([, count]) => count) }];
 
