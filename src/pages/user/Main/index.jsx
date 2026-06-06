@@ -115,6 +115,31 @@ const Char = styled(motion.span)`
   color: #2b6c00;
 `;
 
+const Section = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 }, // 아래에서 + 투명
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 12 },
+  },
+};
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
 function Main() {
   const navigate = useNavigate();
 
@@ -174,35 +199,57 @@ function Main() {
         </SectionBox>
 
         <SectionBox>
-          <h2>오늘의 인기 유행어</h2>
-          <p>매일매일 업데이트되는 인기 유행어를 놓치지마세요!</p>
-          <div style={{ width: "100%", maxWidth: "800px" }}>
-            <TodayWordCard />
-          </div>
+          <Section
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }} // 30% 보이면 1번만 실행
+          >
+            <motion.h2 variants={itemVariants}>오늘의 인기 유행어</motion.h2>
+            <motion.p variants={itemVariants}>
+              매일매일 업데이트되는 인기 유행어를 놓치지마세요!
+            </motion.p>
+            <motion.div variants={itemVariants}>
+              <div style={{ width: "100%", maxWidth: "800px" }}>
+                <TodayWordCard />
+              </div>
+            </motion.div>
+          </Section>
         </SectionBox>
 
         <SectionBox>
-          <p
-            style={{
-              color: "#ff5e00",
-              margin: "0 0 10px 0",
-              fontWeight: "bold",
-            }}
+          <Section
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
           >
-            <b>MINI TEST</b>
-          </p>
-          <h2>나의 MZ력은 몇 점?</h2>
-          <p>유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!</p>
-          <div
-            style={{
-              border: "2px dashed #ccc",
-              padding: "50px",
-              width: "100%",
-              maxWidth: "800px",
-            }}
-          >
-            QuizCard
-          </div>
+            <motion.p
+              variants={itemVariants}
+              style={{
+                color: "#ff5e00",
+                margin: "0 0 10px 0",
+                fontWeight: "bold",
+              }}
+            >
+              <b>MINI TEST</b>
+            </motion.p>
+            <motion.h2 variants={itemVariants}>나의 MZ력은 몇 점?</motion.h2>
+            <motion.p variants={itemVariants}>
+              유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!
+            </motion.p>
+            <motion.div
+              variants={itemVariants}
+              style={{
+                border: "2px dashed #ccc",
+                padding: "50px",
+                width: "100%",
+                maxWidth: "800px",
+              }}
+            >
+              QuizCard
+            </motion.div>
+          </Section>
         </SectionBox>
 
         <SectionBox>
