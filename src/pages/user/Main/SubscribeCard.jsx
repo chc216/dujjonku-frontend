@@ -61,9 +61,10 @@ const SubmitButton = styled.button`
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    opacity: 0.8;
+    background-color: #449705;
   }
 `;
 
