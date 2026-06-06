@@ -102,6 +102,5 @@ const SubscribeContainer = styled.div`
       {isModalOpen && <SubscribeModal onClose={() => setIsModalOpen(false)} />}
     </NavBarContainer>
   );
-}
 
 export default NavBar;
