@@ -9,6 +9,7 @@ import TeamMember from "./TeamMember"
 import SubscribeCard from "./SubscribeCard";
 import HeroSection from "./HeroSection";
 import QuizCard from "@/pages/user/Quiz/QuizCard";
+import { motion } from "framer-motion";
 
 /* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
 const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
@@ -112,9 +113,15 @@ function Main() {
         <SectionBox>
             <h2>실시간 인기 유행어 랭킹</h2>
             <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>
-            <div style={{ width: '100%', maxWidth: '800px' }}>
+            <motion.div
+                style={{ width: '100%', maxWidth: '800px' }}
+                initial={{ opacity: 0, y: 50 }} // 초기값: 투명하고 아래로 내려보냄
+                whileInView={{ opacity: 1, y: 0 }}  // 화면에 보이면 올라옴
+                viewport={{ once: true, amount: 0.7 }}  // 화면에 70% 보이면 실행
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
                 <RankingCard wordsList={DummyRankingData} isLanding={true} />
-            </div>
+            </motion.div>
         </SectionBox>
 
         <SectionBox>
