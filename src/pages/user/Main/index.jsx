@@ -9,8 +9,6 @@ import TeamMember from "./TeamMember"
 import SubscribeCard from "./SubscribeCard";
 
 import QuizCard from "@/pages/user/Quiz/QuizCard";
-import Contact from "./Contact";
-import TeamMember from "./TeamMember";
 import { motion } from "motion/react";
 
 /* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
@@ -198,8 +196,8 @@ function Main() {
           </p>
           <h2>나의 MZ력은 몇 점?</h2>
           <p>유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!</p>
-          <div style={{ width: '100%', maxWidth: '800px' }}>
-                        <TodayWordCard />
+          <div style={{width: '100%', maxWidth: '800px', display: 'flex', justifyContent: 'center'}}>
+                <QuizCard />
           </div>
         </SectionBox>
 
