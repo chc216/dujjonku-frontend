@@ -4,8 +4,9 @@ import DashboardIcon from "@/assets/dashboard.svg?react";
 import QuizIcon from "@/assets/quiz_icon.svg?react";
 import { useNavigate } from "react-router-dom";
 import SubscribeModal from "@/components/SubscribeModal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubscribeIcon from "@/assets/subscribe.svg?react";
+import AdminIcon from "@/assets/admin.svg?react";
 
 const NavBarContainer = styled.div`
   box-sizing: border-box; //구독알림 서비스 네베게이션바에서 안보여서 추가함.
@@ -69,8 +70,9 @@ const SubscribeContainer = styled.div`
 `;
 
 function NavBar() {
-  const navigate = useNavigate();
+  useEffect(() => {}, []);
 
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -90,6 +92,11 @@ function NavBar() {
           Icon={QuizIcon}
           text={"퀴즈"}
           onClick={() => navigate("/quiz")}
+        />
+        <Button
+          Icon={AdminIcon}
+          text={"관리자"}
+          onClick={() => navigate("/admin/login")}
         />
       </ButtonContainer>
       <SubscribeContainer>
