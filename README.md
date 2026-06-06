@@ -45,3 +45,4 @@ npm run dev
 
 
 > 백엔드 서버(`http://localhost:8080`)가 함께 실행 중이어야 데이터가 정상적으로 표시됩니다.
+> 백엔드 서버 세팅 가이드는 [Backend Repo](https://github.com/chc216/dujjonku-core-api)를 참고해주시기 바랍니다.
