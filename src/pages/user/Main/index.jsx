@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import RankingCard from "@/pages/user/DashBoard/RankingCard";
@@ -10,6 +10,7 @@ import SubscribeCard from "./SubscribeCard";
 import HeroSection from "./HeroSection";
 import QuizCard from "@/pages/user/Quiz/QuizCard";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 /* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
 const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
@@ -111,6 +112,26 @@ const itemVariants = {
 
 function Main() {
   const navigate = useNavigate();
+  const [rankingList, setRankingList] = useState([]);
+  const [rankingTop4, setRankingTop4] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/ranking`)
+      .then((res) => {
+        setRankingList(res.data);
+        let tmp = [];
+        for (let i = 0; i < 4; i++) {
+          tmp.push(res.data[i].id);
+        }
+        console.log(tmp);
+        setRankingTop4(tmp);
+      })
+      .catch((err) => {
+        console.error("랭킹 로드 실패:", err);
+        setRankingList(DummyRankingData);
+      });
+  }, []);
 
   return (
     <PageWrapper>
@@ -121,7 +142,7 @@ function Main() {
       </FixedContainer>
 
       <RandingContainer>
-        <HeroSection heroWords={DummyRankingData.slice(0, 4)} />
+        <HeroSection id_list={rankingTop4} />
 
         <SectionBox>
           <h2>실시간 인기 유행어 랭킹</h2>
@@ -133,7 +154,7 @@ function Main() {
             viewport={{ once: true, amount: 0.7 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <RankingCard wordsList={DummyRankingData} isLanding={true} />
+            <RankingCard wordsList={rankingList} isLanding={true} />
           </motion.div>
         </SectionBox>
 

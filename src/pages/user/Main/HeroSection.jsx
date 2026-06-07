@@ -214,7 +214,7 @@ const MiniTrendCard = styled.div`
   }
 `;
 
-function HeroSection() {
+function HeroSection({ id_list }) {
   const navigate = useNavigate();
 
   const animatedWord = "유행어";
@@ -222,10 +222,8 @@ function HeroSection() {
   const [heroWords, setHeroWords] = useState([]);
 
   useEffect(() => {
-    const ids = [1, 2, 3, 4];
-
     Promise.all(
-      ids.map((id) =>
+      id_list.map((id) =>
         axios.get(`http://localhost:8080/report/${id}`).then((res) => res.data),
       ),
     )
@@ -234,8 +232,10 @@ function HeroSection() {
         console.error("단어 로드 실패:", err);
         setHeroWords(dummyHeroWords);
       });
-  }, []);
-
+  }, [id_list]);
+  const maxFrequency = Math.max(
+    ...heroWords.map((w) => Math.max(...Object.values(w.frequency))),
+  );
   const truncateText = (text, maxLength) => {
     if (!text) return "";
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
@@ -248,7 +248,8 @@ function HeroSection() {
           소통을 위한 가이드 <b>두쫀쿠</b>
         </HeroBadge>
         <HeroTitle>
-          따라가기 벅찬 요즘<br/>{" "}
+          따라가기 벅찬 요즘
+          <br />{" "}
           {animatedWord.split("").map((char, i) => (
             <Char
               key={i}
@@ -294,6 +295,7 @@ function HeroSection() {
                   type="line"
                   show_axis={false}
                   ygrid_show={false}
+                  yMax={maxFrequency}
                 />
               </div>
             </div>

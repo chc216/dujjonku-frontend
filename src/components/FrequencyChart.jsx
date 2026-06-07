@@ -6,6 +6,7 @@ function FrequencyChart({
   color = "#69cf24",
   ygrid_show = true,
   show_axis = true,
+  yMax = undefined,
 }) {
   if (!frequency || Object.keys(frequency).length === 0) return null;
   const entries = Object.entries(frequency).reverse();
@@ -45,6 +46,8 @@ function FrequencyChart({
       },
     },
     yaxis: {
+      min: 0,
+      max: yMax,
       labels: {
         style: { colors: "#9e9e9e", fontSize: "12px" },
         show: show_axis,

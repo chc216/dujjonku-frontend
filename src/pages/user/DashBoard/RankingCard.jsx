@@ -125,11 +125,11 @@ const ExpandButton = styled.button`
 /* 트렌드 변화에 따른 아이콘 스타일 */
 const getTrendIcon = (trend) => {
   switch (trend) {
-    case "UP":
+    case "hot":
       return <FiTrendingUp color="#2B6C00" size="20" />;
-    case "DOWN":
+    case "neutral":
       return <FiTrendingDown color="#BA1A1A" size="20" />;
-    case "HOLD":
+    case "cold":
     default:
       return <FiMinus color="#8E8E93" size="20" />;
   }
@@ -164,7 +164,7 @@ function RankingCard({ wordsList, isLanding }) {
               >
                 <motion.div
                   whileHover={{ scale: 1.03, y: -2 }}
-                  whileTap={{ scale: 0.98 }} // 클릭하면 눌리는 느낌
+                  whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 400 }}
                 >
                   <ClickWord key={index} onClick={() => handleWordClick(word)}>
@@ -173,8 +173,8 @@ function RankingCard({ wordsList, isLanding }) {
                     >
                       <RankingBadge rank={index + 1}>{index + 1}</RankingBadge>
                       <WordInfo>
-                        <span className="keyword">{word.keyword}</span>
-                        <span className="descript">{word.description}</span>
+                        <span className="keyword">{word.word}</span>
+                        <span className="descript">{word.meaning}</span>
                       </WordInfo>
                     </div>
 
