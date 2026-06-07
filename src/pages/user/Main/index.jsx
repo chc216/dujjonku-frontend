@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import RankingCard from "@/pages/user/DashBoard/RankingCard";
 import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard";
 import Button from "@/components/nav/Button";
-import Contact from "./Contact"
-import TeamMember from "./TeamMember"
+import Contact from "./Contact";
+import TeamMember from "./TeamMember";
 import SubscribeCard from "./SubscribeCard";
 import HeroSection from "./HeroSection";
 import QuizCard from "@/pages/user/Quiz/QuizCard";
@@ -62,7 +62,7 @@ const RandingContainer = styled.div`
 `;
 
 /* 공통 섹션 스타일 (박스 컨테이너) */
-const SectionBox = styled.section`
+const SectionBox = styled(motion.section)`
   width: 100%;
   box-sizing: border-box; /* 여백 포함 100%로 지정 */
   min-height: 400px;
@@ -96,6 +96,19 @@ const SectionBox = styled.section`
   }
 `;
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 15 },
+  },
+};
+
 function Main() {
   const navigate = useNavigate();
 
@@ -107,33 +120,49 @@ function Main() {
         </RandingLogoContent>
       </FixedContainer>
 
-    <RandingContainer>
+      <RandingContainer>
         <HeroSection heroWords={DummyRankingData.slice(0, 4)} />
-        
-        <SectionBox>
-            <h2>실시간 인기 유행어 랭킹</h2>
-            <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>
-            <motion.div
-                style={{ width: '100%', maxWidth: '800px' }}
-                initial={{ opacity: 0, y: 50 }} // 초기값: 투명하고 아래로 내려보냄
-                whileInView={{ opacity: 1, y: 0 }}  // 화면에 보이면 올라옴
-                viewport={{ once: true, amount: 0.7 }}  // 화면에 70% 보이면 실행
-                transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-                <RankingCard wordsList={DummyRankingData} isLanding={true} />
-            </motion.div>
-        </SectionBox>
 
         <SectionBox>
-          <h2>오늘의 인기 유행어</h2>
-          <p>매일매일 업데이트되는 인기 유행어를 놓치지마세요!</p>
-          <div style={{ width: "100%", maxWidth: "800px" }}>
+          <h2>실시간 인기 유행어 랭킹</h2>
+          <p>데이터베이스와 연동된 실시간 트렌드를 확인하세요!</p>
+          <motion.div
+            style={{ width: "100%", maxWidth: "800px" }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.7 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <RankingCard wordsList={DummyRankingData} isLanding={true} />
+          </motion.div>
+        </SectionBox>
+
+        <SectionBox
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2 variants={itemVariants}>오늘의 인기 유행어</motion.h2>
+          <motion.p variants={itemVariants}>
+            매일매일 업데이트되는 인기 유행어를 놓치지마세요!
+          </motion.p>
+          <motion.div
+            variants={itemVariants}
+            style={{ width: "100%", maxWidth: "800px" }}
+          >
             <TodayWordCard />
-          </div>
+          </motion.div>
         </SectionBox>
 
-        <SectionBox>
-          <p
+        <SectionBox
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.div
+            variants={itemVariants}
             style={{
               color: "#ff5e00",
               margin: "0 0 10px 0",
@@ -141,23 +170,47 @@ function Main() {
             }}
           >
             <b>MINI TEST</b>
-          </p>
-          <h2>나의 MZ력은 몇 점?</h2>
-          <p>유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!</p>
-          <div style={{width: '100%', maxWidth: '800px', display: 'flex', justifyContent: 'center'}}>
-                <QuizCard />
-          </div>
+          </motion.div>
+          <motion.h2 variants={itemVariants}>나의 MZ력은 몇 점?</motion.h2>
+          <motion.p variants={itemVariants}>
+            유행어 퀴즈를 통해 쉽고 재미있게 유행어를 학습하세요!
+          </motion.p>
+          <motion.div
+            variants={itemVariants}
+            style={{
+              width: "100%",
+              maxWidth: "800px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <QuizCard />
+          </motion.div>
         </SectionBox>
 
-        <SectionBox>
-          <h2>트렌드에 한발짝 가까워지세요</h2>
-          <p>매일 업데이트되는 새로운 유행어 알림을 받아보세요.</p>
-          <div style={{ width: '100%' }}>
-                        <SubscribeCard/>
-          </div>
+        <SectionBox
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2 variants={itemVariants}>
+            트렌드에 한발짝 가까워지세요
+          </motion.h2>
+          <motion.p variants={itemVariants}>
+            매일 업데이트되는 새로운 유행어 알림을 받아보세요.
+          </motion.p>
+          <motion.div variants={itemVariants} style={{ width: "100%" }}>
+            <SubscribeCard />
+          </motion.div>
         </SectionBox>
 
-        <SectionBox>
+        <SectionBox
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           <TeamMember />
         </SectionBox>
 
