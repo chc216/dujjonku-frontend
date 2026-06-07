@@ -127,9 +127,9 @@ const getTrendIcon = (trend) => {
   switch (trend) {
     case "hot":
       return <FiTrendingUp color="#2B6C00" size="20" />;
-    case "neutral":
-      return <FiTrendingDown color="#BA1A1A" size="20" />;
     case "cold":
+      return <FiTrendingDown color="#BA1A1A" size="20" />;
+    case "neutral":
     default:
       return <FiMinus color="#8E8E93" size="20" />;
   }
