@@ -7,16 +7,14 @@ import QuestionCard from "./QuestionCard";
 import OptionList from "./OptionList";
 import AnswerCard from "./AnswerCard";
 import ActionButton from "./ActionButton";
+import PageLayout from "@/components/layout/PageLayout";
 
 
 const QuizPageContainer = styled.main`
     flex: 1;
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
     align-items: center;
-    padding-top: 80px; /*top nav바 생기면 고쳐야 할듯*/
-    margin-left: 240px; /*NavBar 왼쪽 고정된거 고려한 마진*/
     background: #FBF9F8;
 `;
 const SubmitSection = styled.div`
@@ -53,9 +51,10 @@ function Quiz() {
 
     if (isLoading) {
         return (
-            <>
-                <h3>퀴즈를 불러오는 중입니다...</h3>
-            </>
+                <PageLayout title="유행어 퀴즈">
+                    <h3>퀴즈를 불러오는 중입니다...</h3>
+                </PageLayout>
+                
         );
     }
 
@@ -101,7 +100,7 @@ function Quiz() {
 
     return (
         <>
-            <NavBar></NavBar>
+            <PageLayout title="유행어 퀴즈">
             <QuizPageContainer>
                 <ProgressBar 
                     currentIndex={currentIndex}
@@ -134,6 +133,7 @@ function Quiz() {
                     />
                 )}
             </QuizPageContainer>
+            </PageLayout>
         </>
     );
 
