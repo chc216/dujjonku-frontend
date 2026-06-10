@@ -78,7 +78,7 @@ function NavBar() {
   return (
     <NavBarContainer>
       <LogoContainer>
-        <LogoContent onClick={() => navigate("/dashboard")}>
+        <LogoContent onClick={() => navigate("/")}>
           Dujjonku
         </LogoContent>
       </LogoContainer>

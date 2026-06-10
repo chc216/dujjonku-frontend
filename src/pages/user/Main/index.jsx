@@ -101,6 +101,7 @@ const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.12 } },
 };
+
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -114,6 +115,11 @@ function Main() {
   const navigate = useNavigate();
   const [rankingList, setRankingList] = useState([]);
   const [rankingTop4, setRankingTop4] = useState([]);
+
+  const toTopPage = () => {
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     axios
@@ -136,7 +142,7 @@ function Main() {
   return (
     <PageWrapper>
       <FixedContainer>
-        <RandingLogoContent onClick={() => navigate("/dashboard")}>
+        <RandingLogoContent onClick={toTopPage}>
           Dujjonku
         </RandingLogoContent>
       </FixedContainer>

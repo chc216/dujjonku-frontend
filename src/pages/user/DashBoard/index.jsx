@@ -62,11 +62,21 @@ function DashBoard() {
         const fetchRanking = async () => {
             try {
                 /* 스프링부트 URL (랭킹) 채워넣기 */
-                const response = await axios.get("http://localhost:8080");
+                const response = await axios.get("http://localhost:8080/ranking");
 
                 /* 데이터가 배열이고, 내용이 있다면 서버 데이터 사용 */
                 if (Array.isArray(response.data) && response.data.length > 0) {
-                    setRankingData(response.data);
+                    const uniqueData = response.data.filter((item, index, self) =>
+                        index === self.findIndex((t) => t.id === item.id)
+                    );
+
+                    const formattedData = uniqueData.map(item => ({
+                        id: item.id,
+                        word: item.word,
+                        meaning: item.meaning,
+                        trend: item.trend === "hot" ? "hot" : item.trend === "cold" ? "cold" : "neutral"
+                    }));
+                    setRankingData(formattedData);
                 } else {
                     /* 텅 빈 리스트라면 더미 데이터로 대체 */
                     console.warn("데이터가 비어있음. (더미데이터)");
