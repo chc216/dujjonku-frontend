@@ -5,20 +5,40 @@ import PageLayout from "@/components/layout/PageLayout";
 import HeaderSection from "./HeaderSection";
 import InfoSection from "./InfoSection";
 import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const ContentSection = styled.div`
   padding: 0 40px;
 `;
 
-function Report({ wordId }) {
+function Report() {
+  const { id } = useParams();
   const [word, setWord] = useState();
+  const navigate = useNavigate();
 
+  console.log(word);
   useEffect(() => {
-    fetch(`http://localhost:8080/report/182`)
-      .then((res) => res.json())
-      .then((data) => setWord(data));
-  }, [wordId]);
+    axios
+      .get(`http://localhost:8080/report/${id}`)
+      .then((res) => {
+        console.log("test");
+        setWord(res.data);
+      })
+      .catch((err) => {
+        console.error("단어 로드 실패:", err);
+        alert("단어를 찾을 수 없습니다.");
+        navigate("/dashboard");
+      });
+  }, [id]);
 
+  if (!word) {
+    return (
+      <PageLayout title={"단어 리포트"}>
+        <div>불러오는 중...</div>
+      </PageLayout>
+    );
+  }
   const dummy = {
     name: "중꺽마",
     example: "이번 시험에 떨어졌다고 실망하지마, 중꺾마 알지?",
@@ -46,18 +66,29 @@ function Report({ wordId }) {
     <>
       <PageLayout title={"단어 리포트"}>
         <HeaderSection
-          word={dummy.name}
-          example={dummy.example}
-          isNew={dummy.isNew}
-          trend={dummy.trend}
+          word={word.name}
+          example={word.example}
+          isNew={calculateNew(word.frequency)}
+          trend={word.trend}
         ></HeaderSection>
         <ContentSection>
-          <InfoSection meaning={dummy.meaning}></InfoSection>
-          {word && <ChartSection frequency={dummy.frequency} />}
+          <InfoSection meaning={word.meaning}></InfoSection>
+          {word && <ChartSection frequency={word.frequency} />}
         </ContentSection>
       </PageLayout>
     </>
   );
+}
+
+function calculateNew(frequency) {
+  const list = Array.from({ length: 12 }, (_, i) => frequency[`week${i + 1}`]);
+
+  const recent = list.slice(0, 4).reduce((a, b) => a + b, 0);
+  const past = list.slice(4).reduce((a, b) => a + b, 0);
+
+  if (past === 0) return recent > 0;
+
+  return recent >= past * 2;
 }
 
 export default Report;
