@@ -51,7 +51,7 @@ function SubscribeModal({onClose}) {
     const [consent, setConsent] = useState(false);
 
     const handleSubmit = async (e) => {
-        
+        e.preventDefault();
         if(!email) {
             alert('이메일을 입력해주세요.');
             return;
