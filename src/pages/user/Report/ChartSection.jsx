@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
-  width: 932px; /* InfoSection 두 카드(456*2) + gap(20) = 932 */
+  width: 100%;
   height: 350px;
 
   border-radius: 16px;

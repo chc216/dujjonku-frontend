@@ -7,6 +7,7 @@ import InfoSection from "./InfoSection";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Vote from "@/components/Vote";
 
 const ContentSection = styled.div`
   padding: 0 40px;
@@ -39,6 +40,7 @@ function Report() {
       </PageLayout>
     );
   }
+
   const dummy = {
     name: "중꺽마",
     example: "이번 시험에 떨어졌다고 실망하지마, 중꺾마 알지?",
@@ -72,8 +74,12 @@ function Report() {
           trend={word.trend}
         ></HeaderSection>
         <ContentSection>
-          <InfoSection meaning={word.meaning}></InfoSection>
+          <InfoSection
+            meaning={word.meaning}
+            scenario={word.scenario}
+          ></InfoSection>
           {word && <ChartSection frequency={word.frequency} />}
+          <Vote id={id}></Vote>
         </ContentSection>
       </PageLayout>
     </>

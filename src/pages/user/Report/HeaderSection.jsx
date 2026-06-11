@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FiTrendingUp, FiTrendingDown, FiMinus } from "react-icons/fi";
 const Container = styled.div`
-  padding-left: 4%;
+  padding-left: 7%;
   display: flex;
   height: 136px;
   justify-content: space-between;
