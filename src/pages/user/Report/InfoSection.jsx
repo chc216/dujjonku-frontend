@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import DocumentIcon from "@/assets/document_icon.svg?react";
+import BracketIcon from "@/assets/bracket.svg?react";
 const Container = styled.div`
   display: flex;
   padding-top: 70px;
   padding-bottom: 20px;
   gap: 20px;
+  width: 100%;
   justify-content: center;
 `;
 
 const Card = styled.div`
   padding-top: 15px;
-  height: 200px;
-  width: 456px;
+  height: 130px;
+  width: 100%;
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.06),
     0 2px 4px -1px rgba(0, 0, 0, 0.1);
@@ -52,7 +54,7 @@ const Meaning = styled.div`
   line-height: 26px;
 `;
 
-function InfoSection({ meaning }) {
+function InfoSection({ meaning, scenario }) {
   return (
     <Container>
       <Card>
@@ -66,12 +68,12 @@ function InfoSection({ meaning }) {
       </Card>
       <Card>
         <Header>
-          <DocumentIcon
+          <BracketIcon
             style={{ width: "13px", height: "16px", fill: "#3f4a6" }}
-          ></DocumentIcon>
-          <Title>사전적 정의</Title>
+          ></BracketIcon>
+          <Title>이런 상황에서 써보세요</Title>
         </Header>
-        <Meaning>{meaning}</Meaning>
+        <Meaning>{scenario}</Meaning>
       </Card>
     </Container>
   );
