@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SlLike, SlDislike } from "react-icons/sl";
-import { motion } from "framer-motion";
+import { FaHeart } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import styled from "styled-components";
 import Cookies from "js-cookie";
 
@@ -86,13 +87,14 @@ const DislikeCount = styled.span`
 const cookie_key = (id) => `vote_${id}`;
 
 function Vote({ id }) {
+  const [hearts, setHearts] = useState([]);
+  const [nonHearts, setNonHearts] = useState([]);
   const [likeCount, setLikeCount] = useState(0);
   const [dislikeCount, setDislikeCount] = useState(0);
-  const [count, setCount] = useState({ like: 0, dislike: 0 });
   const [voteState, setVoteState] = useState(null);
   const [likeKey, setLikeKey] = useState(0);
   const [dislikeKey, setDislikeKey] = useState(1);
-  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get(`http://localhost:8080/${id}/vote`)
@@ -118,9 +120,11 @@ function Vote({ id }) {
     if (voteState == "like" || voteState == "dislike") {
       if (type == "like") {
         setLikeKey((k) => k + 1);
+        spawnHeart();
       }
       if (type == "dislike") {
         setDislikeKey((k) => k + 1);
+        spawnNonHeart();
       }
       return;
     }
@@ -132,6 +136,8 @@ function Vote({ id }) {
       });
       setVoteState("like");
       Cookies.set(cookie_key(id), "like", { expires: 30 });
+      setLikeKey((k) => k + 1);
+      spawnHeart();
     }
     if (type == "dislike") {
       axios.post(`http://localhost:8080/${id}/dislike`).then((res) => {
@@ -140,25 +146,68 @@ function Vote({ id }) {
       });
       setVoteState("dislike");
       Cookies.set(cookie_key(id), "dislike", { expires: 30 });
+      setDislikeKey((k) => k + 1);
+      spawnNonHeart();
     }
+  };
+
+  const spawnHeart = () => {
+    const id = Date.now() + Math.random();
+    const x = (Math.random() - 0.5) * 40;
+    setHearts((prev) => [...prev, { id, x }]);
+    setTimeout(() => {
+      setHearts((prev) => prev.filter((h) => h.id !== id));
+    }, 1000);
+  };
+
+  const spawnNonHeart = () => {
+    const id = Date.now() + Math.random();
+    const x = (Math.random() - 0.5) * 40;
+    setNonHearts((prev) => [...prev, { id, x }]);
+    setTimeout(() => {
+      setNonHearts((prev) => prev.filter((h) => h.id !== id));
+    }, 1000);
   };
 
   return (
     <Container>
-      <motion.div
-        key={likeKey}
-        whileTap={{ scale: 0.8 }}
-        onClick={() => handleClick("like")}
-        animate={{ scale: [1, 1.4, 0.9, 1] }}
-        transition={{ duration: 0.4 }}
-        style={{ cursor: "pointer", display: "flex", flexShrink: 0 }}
-      >
-        <SlLike
-          style={{
-            color: "#e86a6a",
-          }}
-        />
-      </motion.div>
+      <div style={{ position: "relative", display: "flex" }}>
+        <AnimatePresence>
+          {hearts.map((heart) => (
+            <motion.div
+              key={heart.id}
+              initial={{ opacity: 1, y: 0, x: 0, scale: 0.5 }}
+              animate={{ opacity: 0, y: -60, x: heart.x, scale: 1.2 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: 0,
+                translateX: "-50%",
+                pointerEvents: "none",
+                color: "#fd6565",
+              }}
+            >
+              <div style={{ fontSize: "20px", userSelect: "none" }}>🔥</div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+        <motion.div
+          key={likeKey}
+          whileTap={{ scale: 0.8 }}
+          onClick={() => handleClick("like")}
+          animate={{ scale: [1, 1.4, 0.9, 1] }}
+          transition={{ duration: 0.4 }}
+          style={{ cursor: "pointer", display: "flex", flexShrink: 0 }}
+        >
+          <div
+            style={{ cursor: "pointer", fontSize: "24px", userSelect: "none" }}
+          >
+            🔥
+          </div>
+        </motion.div>
+      </div>
       <BarWrap>
         <Pointer percent={likePercent} />
         <Bar>
@@ -168,16 +217,44 @@ function Vote({ id }) {
         <LikeCount>{likeCount}</LikeCount>
         <DislikeCount>{dislikeCount}</DislikeCount>
       </BarWrap>
-      <motion.div
-        key={dislikeKey}
-        whileTap={{ scale: 0.8 }}
-        onClick={() => handleClick("dislike")}
-        animate={{ scale: [1, 1.4, 0.9, 1] }}
-        transition={{ duration: 0.4 }}
-        style={{ display: "flex", flexShrink: 0 }}
-      >
-        <SlDislike style={{ fill: "#0e1943", cursor: "pointer" }} />
-      </motion.div>
+      <div style={{ position: "relative", display: "flex" }}>
+        {/* 떠오르는 하트들 */}
+        <AnimatePresence>
+          {nonHearts.map((nonHeart) => (
+            <motion.div
+              key={nonHeart.id}
+              initial={{ opacity: 1, y: 0, x: 0, scale: 0.5 }}
+              animate={{ opacity: 0, y: -60, x: nonHeart.x, scale: 1.2 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: 0,
+                translateX: "-50%",
+                pointerEvents: "none",
+                color: "#fd6565",
+              }}
+            >
+              <div style={{ fontSize: "20px", userSelect: "none" }}>💩</div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+        <motion.div
+          key={dislikeKey}
+          whileTap={{ scale: 0.8 }}
+          onClick={() => handleClick("dislike")}
+          animate={{ scale: [1, 1.4, 0.9, 1] }}
+          transition={{ duration: 0.4 }}
+          style={{ cursor: "pointer", display: "flex", flexShrink: 0 }}
+        >
+          <div
+            style={{ cursor: "pointer", fontSize: "24px", userSelect: "none" }}
+          >
+            💩
+          </div>
+        </motion.div>
+      </div>
     </Container>
   );
 }

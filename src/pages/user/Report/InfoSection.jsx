@@ -32,7 +32,7 @@ const Header = styled.div`
 const Title = styled.div`
   color: #1b1c1c;
   font-family: Lexend;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   letter-spacing: 1px;
@@ -59,19 +59,19 @@ function InfoSection({ meaning, scenario }) {
     <Container>
       <Card>
         <Header>
-          <DocumentIcon
+          {/* <DocumentIcon
             style={{ width: "13px", height: "16px", fill: "#3f4a6" }}
-          ></DocumentIcon>
-          <Title>사전적 정의</Title>
+          ></DocumentIcon> */}
+          <Title>📖 사전적 정의</Title>
         </Header>
         <Meaning>{meaning}</Meaning>
       </Card>
       <Card>
         <Header>
-          <BracketIcon
+          {/* <BracketIcon
             style={{ width: "13px", height: "16px", fill: "#3f4a6" }}
-          ></BracketIcon>
-          <Title>이런 상황에서 써보세요</Title>
+          ></BracketIcon> */}
+          <Title>🚀 이런 상황에서 써보세요</Title>
         </Header>
         <Meaning>{scenario}</Meaning>
       </Card>
