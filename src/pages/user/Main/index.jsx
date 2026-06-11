@@ -7,7 +7,7 @@ import Button from "@/components/nav/Button";
 import Contact from "./Contact";
 import TeamMember from "./TeamMember";
 import SubscribeCard from "./SubscribeCard";
-import HeroSection from "./HeroSection";
+/*import HeroSection from "./HeroSection";*/
 import QuizCard from "@/pages/user/Quiz/QuizCard";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -111,10 +111,78 @@ const itemVariants = {
   },
 };
 
+/* HeroSection 코드 합침 */
+const HeroSectionWrapper = styled.section`
+  width: 100%;
+  box-sizing: border-box;
+  padding: 120px 10% 80px 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+`;
+
+const HeroTextContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 800px;
+`;
+
+const HeroBadge = styled.span`
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2b6c00;
+  margin-bottom: 20px;
+`;
+
+const HeroTitle = styled.h1`
+  font-size: 3.5rem;
+  font-weight: 1000;
+  line-height: 1.3;
+  color: #1b1c1c;
+  margin: 0 0 20px 0;
+`;
+
+const Char = styled(motion.span)`
+  display: inline-block;
+  color: #2b6c00;
+`;
+
+const HeroDescription = styled.p`
+  font-size: 1.2rem;
+  color: #3f4a36;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 600px;
+`;
+
+const LinkButton = styled.button`
+  padding: 15px 40px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px #ebe6e6;
+  background-color: #58cc02;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #449705;
+  }
+`;
+
 function Main() {
   const navigate = useNavigate();
   const [rankingList, setRankingList] = useState([]);
-  const [rankingTop4, setRankingTop4] = useState([]);
+  /* const [rankingTop4, setRankingTop4] = useState([]); */
+  const animatedWord = "유행어";
 
   const toTopPage = () => {
     navigate('/');
@@ -126,13 +194,14 @@ function Main() {
       .get(`http://localhost:8080/ranking`)
       .then((res) => {
         setRankingList(res.data);
-        let tmp = [];
+      })
+        /*let tmp = [];
         for (let i = 0; i < 4; i++) {
           tmp.push(res.data[i].id);
         }
         console.log(tmp);
         setRankingTop4(tmp);
-      })
+      })*/
       .catch((err) => {
         console.error("랭킹 로드 실패:", err);
         setRankingList(DummyRankingData);
@@ -148,7 +217,43 @@ function Main() {
       </FixedContainer>
 
       <RandingContainer>
-        <HeroSection id_list={rankingTop4} />
+        {/* <HeroSection id_list={rankingTop4} /> */}
+        <HeroSectionWrapper>
+          <HeroTextContent>
+            <HeroBadge>
+              소통을 위한 가이드 <b>두쫀쿠</b>
+            </HeroBadge>
+            <HeroTitle>
+              따라가기 벅찬 요즘 {" "}
+              {animatedWord.split("").map((char, i) => (
+                <Char
+                  key={i}
+                  animate={{ opacity: [0, 1, 1, 0] }}
+                  transition={{
+                    duration: 3,
+                    times: [0, 0.1, 0.9, 1],
+                    delay: i * 0.2,
+                    repeat: Infinity,
+                    repeatDelay: 0.5,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {char}
+                </Char>
+              ))}
+              ,<br />한 눈에 쉽게
+            </HeroTitle>
+
+            <HeroDescription>
+              실시간 트렌드부터 정확한 뜻과 예문까지!
+              <br />
+              세대 간의 언어 장벽을 허물고 소통을 시작해 보세요.
+            </HeroDescription>
+            <LinkButton onClick={() => navigate("/dashboard")}>
+              무료로 시작하기
+            </LinkButton>
+          </HeroTextContent>
+        </HeroSectionWrapper>
 
         <SectionBox>
           <h2>실시간 인기 유행어 랭킹</h2>
