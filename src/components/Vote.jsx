@@ -8,15 +8,18 @@ import styled from "styled-components";
 import Cookies from "js-cookie";
 
 const Container = styled.div`
+  position: relative;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   gap: 12px;
 
   width: 100%;
-  height: 65px;
-  padding: 0 6%;
+  height: 80px;
+  padding: 20px 6% 0 6%;
+
   border-radius: 16px;
   border-bottom: 1px solid #e2e3e4;
   border-left: 1px solid #e4e2e2;
@@ -86,6 +89,19 @@ const DislikeCount = styled.span`
 `;
 const cookie_key = (id) => `vote_${id}`;
 
+const Title = styled.div`
+  position: absolute;
+  color: #1b1c1c;
+  font-family: Lexend;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0cap.5px;
+  text-transform: uppercase;
+  top: 15px;
+  left: 60px;
+`;
+
 function Vote({ id }) {
   const [hearts, setHearts] = useState([]);
   const [nonHearts, setNonHearts] = useState([]);
@@ -132,7 +148,7 @@ function Vote({ id }) {
     if (type == "like") {
       axios.post(`http://localhost:8080/${id}/like`).then((res) => {
         console.log("liked => " + res.data);
-        setLikeCount(res.data);
+        setLikeCount(res.data.count);
       });
       setVoteState("like");
       Cookies.set(cookie_key(id), "like", { expires: 30 });
@@ -142,7 +158,7 @@ function Vote({ id }) {
     if (type == "dislike") {
       axios.post(`http://localhost:8080/${id}/dislike`).then((res) => {
         console.log("disliked => " + res.data.dislike);
-        setDislikeCount(res.data);
+        setDislikeCount(res.data.count);
       });
       setVoteState("dislike");
       Cookies.set(cookie_key(id), "dislike", { expires: 30 });
@@ -171,6 +187,7 @@ function Vote({ id }) {
 
   return (
     <Container>
+      <Title>이 단어가 마음에 드셨나요?</Title>
       <div style={{ position: "relative", display: "flex" }}>
         <AnimatePresence>
           {hearts.map((heart) => (
@@ -202,7 +219,7 @@ function Vote({ id }) {
           style={{ cursor: "pointer", display: "flex", flexShrink: 0 }}
         >
           <div
-            style={{ cursor: "pointer", fontSize: "24px", userSelect: "none" }}
+            style={{ cursor: "pointer", fontSize: "20px", userSelect: "none" }}
           >
             🔥
           </div>
@@ -249,7 +266,7 @@ function Vote({ id }) {
           style={{ cursor: "pointer", display: "flex", flexShrink: 0 }}
         >
           <div
-            style={{ cursor: "pointer", fontSize: "24px", userSelect: "none" }}
+            style={{ cursor: "pointer", fontSize: "20px", userSelect: "none" }}
           >
             💩
           </div>
