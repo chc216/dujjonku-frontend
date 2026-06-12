@@ -97,7 +97,6 @@ const SectionBox = styled(motion.section)`
   }
 `;
 
-/* 상위 섹션 2개 (가로 분할) */
 const SplitSection = styled(motion.section)`
   width: 100%;
   box-sizing: border-box;
@@ -106,7 +105,7 @@ const SplitSection = styled(motion.section)`
   align-items: center;
   justify-content: center;
   gap: 40px;
-  background-color: %{(props) => props.bg || "#ffffff"};
+  background-color: ${(props) => props.bg || "#ffffff"};
 
   @media (max-width: 1100px) {
     flex-direction: column;
@@ -122,7 +121,9 @@ const TextBlock = styled.div`
   align-items: flex-start;
   max-width: 500px;
 
-  @media (max-width: 1100px) { align-items: center; }
+  @media (max-width: 1100px) {
+    align-items: center;
+  }
 
   .badge {
     color: #2b6c00;
@@ -131,7 +132,8 @@ const TextBlock = styled.div`
     margin-bottom: 20px;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     font-size: 3.5rem;
     font-weight: 950;
     line-height: 1.2;
@@ -139,10 +141,15 @@ const TextBlock = styled.div`
     margin: 0 0 25px 0;
     text-align: left;
     word-break: keep-all;
-    @media (max-width: 1100px) { text-align: center; font-size: 2.8rem; }
+    @media (max-width: 1100px) {
+      text-align: center;
+      font-size: 2.8rem;
+    }
   }
 
-  .highlight { color: #2b6c00; }
+  .highlight {
+    color: #2b6c00;
+  }
 
   p {
     font-size: 1.2rem;
@@ -150,7 +157,9 @@ const TextBlock = styled.div`
     line-height: 1.7;
     margin-bottom: 40px;
     text-align: left;
-    @media (max-width: 1100px) { text-align: center; }
+    @media (max-width: 1100px) {
+      text-align: center;
+    }
   }
 `;
 
@@ -184,7 +193,10 @@ const StickerCloud = styled.div`
   min-width: 550px;
   width: 100%;
 
-  @media (max-width: 600px) { min-width: 100%; height: 350px; }
+  @media (max-width: 600px) {
+    min-width: 100%;
+    height: 350px;
+  }
 `;
 
 const Sticker = styled(motion.div)`
@@ -202,13 +214,64 @@ const Sticker = styled(motion.div)`
 `;
 
 const stickerPos = [
-  { top: "10%", left: "15%", bg: "#4A7C2A", fs: "26px", p: "18px 35px", rot: -5 },
-  { top: "20%", left: "60%", bg: "#FFB800", fs: "22px", p: "15px 30px", rot: 9 },
-  { top: "55%", left: "10%", bg: "#83B259", fs: "20px", p: "14px 28px", rot: -10 },
-  { top: "45%", left: "45%", bg: "#ffffff", color: "#1b1c1c", fs: "18px", p: "12px 24px", rot: 5 },
-  { top: "75%", left: "30%", bg: "#111111", fs: "16px", p: "10px 22px", rot: -3 },
-  { top: "65%", left: "65%", bg: "#E7F0E0", color: "#2b6c00", fs: "15px", p: "10px 20px", rot: 12 },
-  { top: "15%", left: "40%", bg: "#FF5E00", fs: "14px", p: "8px 18px", rot: -15 }
+  {
+    top: "10%",
+    left: "15%",
+    bg: "#4A7C2A",
+    fs: "26px",
+    p: "18px 35px",
+    rot: -5,
+  },
+  {
+    top: "20%",
+    left: "60%",
+    bg: "#FFB800",
+    fs: "22px",
+    p: "15px 30px",
+    rot: 9,
+  },
+  {
+    top: "55%",
+    left: "10%",
+    bg: "#83B259",
+    fs: "20px",
+    p: "14px 28px",
+    rot: -10,
+  },
+  {
+    top: "45%",
+    left: "45%",
+    bg: "#ffffff",
+    color: "#1b1c1c",
+    fs: "18px",
+    p: "12px 24px",
+    rot: 5,
+  },
+  {
+    top: "75%",
+    left: "30%",
+    bg: "#111111",
+    fs: "16px",
+    p: "10px 22px",
+    rot: -3,
+  },
+  {
+    top: "65%",
+    left: "65%",
+    bg: "#E7F0E0",
+    color: "#2b6c00",
+    fs: "15px",
+    p: "10px 20px",
+    rot: 12,
+  },
+  {
+    top: "15%",
+    left: "40%",
+    bg: "#FF5E00",
+    fs: "14px",
+    p: "8px 18px",
+    rot: -15,
+  },
 ];
 
 /* 섹션 2의 채팅 UI */
@@ -233,7 +296,10 @@ const ChatMe = styled.div`
   align-self: flex-start;
   font-size: 1.15rem;
   font-weight: 500;
-  .point { color: #2b6c00; font-weight: 800; }
+  .point {
+    color: #2b6c00;
+    font-weight: 800;
+  }
 `;
 
 const Translation = styled(motion.div)`
@@ -243,9 +309,22 @@ const Translation = styled(motion.div)`
   border-radius: 15px;
   margin-left: 20px;
   max-width: 85%;
-  .head { font-size: 0.9rem; font-weight: 800; color: #58cc02; margin-bottom: 5px; }
-  .word { font-size: 1.2rem; font-weight: 800; color: #1b1c1c;}
-  .mean { font-size: 1rem; color: #666; margin-top: 4px; }
+  .head {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #58cc02;
+    margin-bottom: 5px;
+  }
+  .word {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1b1c1c;
+  }
+  .mean {
+    font-size: 1rem;
+    color: #666;
+    margin-top: 4px;
+  }
 `;
 
 const ChatMom = styled.div`
@@ -280,11 +359,14 @@ function Main() {
   const animatedWord = "유행어";
 
   const toTopPage = () => {
-    navigate('/');
+    navigate("/");
     window.scrollTo(0, 0);
   };
 
-  const topStickers = rankingList.length > 0 ? rankingList.slice(0, 7) : DummyRankingData.slice(0, 7);
+  const topStickers =
+    rankingList.length > 0
+      ? rankingList.slice(0, 7)
+      : DummyRankingData.slice(0, 7);
 
   useEffect(() => {
     axios
@@ -292,7 +374,7 @@ function Main() {
       .then((res) => {
         setRankingList(res.data);
       })
-        /*let tmp = [];
+      /*let tmp = [];
         for (let i = 0; i < 4; i++) {
           tmp.push(res.data[i].id);
         }
@@ -308,18 +390,23 @@ function Main() {
   return (
     <PageWrapper>
       <FixedContainer>
-        <RandingLogoContent onClick={toTopPage}>
-          Dujjonku
-        </RandingLogoContent>
+        <RandingLogoContent onClick={toTopPage}>Dujjonku</RandingLogoContent>
       </FixedContainer>
 
       <RandingContainer>
         {/* <HeroSection id_list={rankingTop4} /> */}
-        <SplitSection initial={{ opacity: 0}} whileInView={{ opacity: 1 }} viewport={{ once: true}}>
+        <SplitSection
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
           <TextBlock>
-            <div className="badge">소통을 위한 가이드 <b>두쫀쿠</b></div>
+            <div className="badge">
+              소통을 위한 가이드 <b>두쫀쿠</b>
+            </div>
             <h1>
-                따라가기 벅찬 요즘<br/>{" "}
+              따라가기 벅찬 요즘
+              <br />{" "}
               {animatedWord.split("").map((char, i) => (
                 <Char
                   key={i}
@@ -338,11 +425,16 @@ function Main() {
               ))}
               ,<br />한 눈에 쉽게
             </h1>
-            <p>요즘 뜨는 말, 다 모았어요.<br/>
-              실시간 트렌드부터 정확한 뜻과 예문까지!<br />
+            <p>
+              요즘 뜨는 말, 다 모았어요.
+              <br />
+              실시간 트렌드부터 정확한 뜻과 예문까지!
+              <br />
               세대 간의 언어 장벽을 허물고 소통을 시작해 보세요.
             </p>
-            <LinkButton onClick={() => navigate("/dashboard")}>무료로 시작하기</LinkButton>
+            <LinkButton onClick={() => navigate("/dashboard")}>
+              무료로 시작하기
+            </LinkButton>
           </TextBlock>
 
           <StickerCloud>
@@ -359,7 +451,7 @@ function Main() {
                 whileHover={{ scale: 1.1, zIndex: 10, rotate: 0 }}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: idx*0.1, type: "spring" }}
+                transition={{ delay: idx * 0.1, type: "spring" }}
                 onClick={() => navigate(`/report/${item.id}`)}
               >
                 {item.word}
@@ -368,19 +460,43 @@ function Main() {
           </StickerCloud>
         </SplitSection>
 
-        <SplitSection bg="#fafafa" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true}}>
+        <SplitSection
+          bg="#fafafa"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
           <TextBlock>
             <div className="badge">세대 사이, 말이 통하는 순간</div>
-            <h2>모르고 지나친 그 말들,<br/>사실 <span className="highlight">이런 뜻</span>이었어요</h2>
-            <p>대화 속 유행어를 확인할 수 있어요.<br/>이제 못 알아듣고 넘어가는 일은 없어요.</p>
-            <LinkButton onClick={() => navigate("/report/1")}>무슨 뜻인지 알아보기</LinkButton>
+            <h2>
+              모르고 지나친 그 말들,
+              <br />
+              사실 <span className="highlight">이런 뜻</span>이었어요
+            </h2>
+            <p>
+              대화 속 유행어를 확인할 수 있어요.
+              <br />
+              이제 못 알아듣고 넘어가는 일은 없어요.
+            </p>
+            <LinkButton onClick={() => navigate("/report/1")}>
+              무슨 뜻인지 알아보기
+            </LinkButton>
           </TextBlock>
 
           <ChatWindow>
-            <ChatMe>엄마 나 오늘 완전 <span className="point">스불재</span>였어 ㅠㅠ</ChatMe>
-            <Translation initial={{ x: -20, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} translation={{ delay: 0.5 }}>
+            <ChatMe>
+              엄마 나 오늘 완전 <span className="point">스불재</span>였어 ㅠㅠ
+            </ChatMe>
+            <Translation
+              initial={{ x: -20, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              translation={{ delay: 0.5 }}
+            >
               <div className="head">두쫀쿠 번역</div>
-              <div className="word">스불재 <span style={{fontWeight:400}}> 스스로 불러온 재앙</span></div>
+              <div className="word">
+                스불재{" "}
+                <span style={{ fontWeight: 400 }}> 스스로 불러온 재앙</span>
+              </div>
               <div className="mean">= 자초한 힘든 상황</div>
             </Translation>
             <ChatMom>아 그런 뜻이었구나! 고생했네 우리 아들~</ChatMom>
