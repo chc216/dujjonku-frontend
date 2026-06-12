@@ -97,68 +97,61 @@ const SectionBox = styled(motion.section)`
   }
 `;
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring", stiffness: 300, damping: 15 },
-  },
-};
-
-/* HeroSection 코드 합침 */
-const HeroSectionWrapper = styled.section`
+/* 상위 섹션 2개 (가로 분할) */
+const SplitSection = styled(motion.section)`
   width: 100%;
   box-sizing: border-box;
-  padding: 120px 10% 80px 10%;
+  padding: 120px 10%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  gap: 40px;
+  background-color: %{(props) => props.bg || "#ffffff"};
+
+  @media (max-width: 1100px) {
+    flex-direction: column;
+    text-align: center;
+    padding: 80px 5%;
+  }
 `;
 
-const HeroTextContent = styled.div`
+const TextBlock = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  max-width: 800px;
-`;
+  align-items: flex-start;
+  max-width: 500px;
 
-const HeroBadge = styled.span`
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #2b6c00;
-  margin-bottom: 20px;
-`;
+  @media (max-width: 1100px) { align-items: center; }
 
-const HeroTitle = styled.h1`
-  font-size: 3.5rem;
-  font-weight: 1000;
-  line-height: 1.3;
-  color: #1b1c1c;
-  margin: 0 0 20px 0;
-`;
+  .badge {
+    color: #2b6c00;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
 
-const Char = styled(motion.span)`
-  display: inline-block;
-  color: #2b6c00;
-`;
+  h1, h2 {
+    font-size: 3.5rem;
+    font-weight: 950;
+    line-height: 1.2;
+    color: #1b1c1c;
+    margin: 0 0 25px 0;
+    text-align: left;
+    word-break: keep-all;
+    @media (max-width: 1100px) { text-align: center; font-size: 2.8rem; }
+  }
 
-const HeroDescription = styled.p`
-  font-size: 1.2rem;
-  color: #3f4a36;
-  line-height: 1.6;
-  margin-bottom: 40px;
-  max-width: 600px;
+  .highlight { color: #2b6c00; }
+
+  p {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    text-align: left;
+    @media (max-width: 1100px) { text-align: center; }
+  }
 `;
 
 const LinkButton = styled.button`
@@ -178,6 +171,108 @@ const LinkButton = styled.button`
   }
 `;
 
+const Char = styled(motion.span)`
+  display: inline-block;
+  color: #2b6c00;
+`;
+
+/* 섹션 1의 클라우드 컴포넌트 */
+const StickerCloud = styled.div`
+  flex: 1;
+  position: relative;
+  height: 450px;
+  min-width: 550px;
+  width: 100%;
+
+  @media (max-width: 600px) { min-width: 100%; height: 350px; }
+`;
+
+const Sticker = styled(motion.div)`
+  position: absolute;
+  top: ${(props) => props.$top};
+  left: ${(props) => props.$left};
+  padding: ${(props) => props.$p || "12px 24px"};
+  font-size: ${(props) => props.$fs || "18px"};
+  font-weight: 900;
+  border-radius: 50px;
+  color: ${(props) => props.$color || "#fff"};
+  background-color: ${(props) => props.$bg || "#58cc02"};
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+`;
+
+const stickerPos = [
+  { top: "10%", left: "15%", bg: "#4A7C2A", fs: "26px", p: "18px 35px", rot: -5 },
+  { top: "20%", left: "60%", bg: "#FFB800", fs: "22px", p: "15px 30px", rot: 9 },
+  { top: "55%", left: "10%", bg: "#83B259", fs: "20px", p: "14px 28px", rot: -10 },
+  { top: "45%", left: "45%", bg: "#ffffff", color: "#1b1c1c", fs: "18px", p: "12px 24px", rot: 5 },
+  { top: "75%", left: "30%", bg: "#111111", fs: "16px", p: "10px 22px", rot: -3 },
+  { top: "65%", left: "65%", bg: "#E7F0E0", color: "#2b6c00", fs: "15px", p: "10px 20px", rot: 12 },
+  { top: "15%", left: "40%", bg: "#FF5E00", fs: "14px", p: "8px 18px", rot: -15 }
+];
+
+/* 섹션 2의 채팅 UI */
+const ChatWindow = styled.div`
+  flex: 1;
+  background: #ffffff;
+  border-radius: 30px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 480px;
+  border: 1px solid #f0f0f0;
+`;
+
+const ChatMe = styled.div`
+  background: #f1f3f5;
+  padding: 18px 22px;
+  border-radius: 22px;
+  border-bottom-left-radius: 5px;
+  align-self: flex-start;
+  font-size: 1.15rem;
+  font-weight: 500;
+  .point { color: #2b6c00; font-weight: 800; }
+`;
+
+const Translation = styled(motion.div)`
+  background: #f4f9f1;
+  border: 1.5px solid #58cc02;
+  padding: 20px;
+  border-radius: 15px;
+  margin-left: 20px;
+  max-width: 85%;
+  .head { font-size: 0.9rem; font-weight: 800; color: #58cc02; margin-bottom: 5px; }
+  .word { font-size: 1.2rem; font-weight: 800; color: #1b1c1c;}
+  .mean { font-size: 1rem; color: #666; margin-top: 4px; }
+`;
+
+const ChatMom = styled.div`
+  background: #58cc02;
+  color: white;
+  padding: 18px 22px;
+  border-radius: 22px;
+  border-bottom-right-radius: 5px;
+  align-self: flex-end;
+  font-size: 1.15rem;
+  font-weight: 500;
+`;
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 15 },
+  },
+};
+
 function Main() {
   const navigate = useNavigate();
   const [rankingList, setRankingList] = useState([]);
@@ -188,6 +283,8 @@ function Main() {
     navigate('/');
     window.scrollTo(0, 0);
   };
+
+  const topStickers = rankingList.length > 0 ? rankingList.slice(0, 7) : DummyRankingData.slice(0, 7);
 
   useEffect(() => {
     axios
@@ -218,13 +315,11 @@ function Main() {
 
       <RandingContainer>
         {/* <HeroSection id_list={rankingTop4} /> */}
-        <HeroSectionWrapper>
-          <HeroTextContent>
-            <HeroBadge>
-              소통을 위한 가이드 <b>두쫀쿠</b>
-            </HeroBadge>
-            <HeroTitle>
-              따라가기 벅찬 요즘 {" "}
+        <SplitSection initial={{ opacity: 0}} whileInView={{ opacity: 1 }} viewport={{ once: true}}>
+          <TextBlock>
+            <div className="badge">소통을 위한 가이드 <b>두쫀쿠</b></div>
+            <h1>
+                따라가기 벅찬 요즘<br/>{" "}
               {animatedWord.split("").map((char, i) => (
                 <Char
                   key={i}
@@ -242,18 +337,55 @@ function Main() {
                 </Char>
               ))}
               ,<br />한 눈에 쉽게
-            </HeroTitle>
-
-            <HeroDescription>
-              실시간 트렌드부터 정확한 뜻과 예문까지!
-              <br />
+            </h1>
+            <p>요즘 뜨는 말, 다 모았어요.<br/>
+              실시간 트렌드부터 정확한 뜻과 예문까지!<br />
               세대 간의 언어 장벽을 허물고 소통을 시작해 보세요.
-            </HeroDescription>
-            <LinkButton onClick={() => navigate("/dashboard")}>
-              무료로 시작하기
-            </LinkButton>
-          </HeroTextContent>
-        </HeroSectionWrapper>
+            </p>
+            <LinkButton onClick={() => navigate("/dashboard")}>무료로 시작하기</LinkButton>
+          </TextBlock>
+
+          <StickerCloud>
+            {topStickers.map((item, idx) => (
+              <Sticker
+                key={idx}
+                $bg={stickerPos[idx].bg}
+                $color={stickerPos[idx].color}
+                $fs={stickerPos[idx].fs}
+                $p={stickerPos[idx].p}
+                $top={stickerPos[idx].top}
+                $left={stickerPos[idx].left}
+                style={{ rotate: stickerPos[idx].rot }}
+                whileHover={{ scale: 1.1, zIndex: 10, rotate: 0 }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: idx*0.1, type: "spring" }}
+                onClick={() => navigate(`/report/${item.id}`)}
+              >
+                {item.word}
+              </Sticker>
+            ))}
+          </StickerCloud>
+        </SplitSection>
+
+        <SplitSection bg="#fafafa" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true}}>
+          <TextBlock>
+            <div className="badge">세대 사이, 말이 통하는 순간</div>
+            <h2>모르고 지나친 그 말들,<br/>사실 <span className="highlight">이런 뜻</span>이었어요</h2>
+            <p>대화 속 유행어를 확인할 수 있어요.<br/>이제 못 알아듣고 넘어가는 일은 없어요.</p>
+            <LinkButton onClick={() => navigate("/report/1")}>무슨 뜻인지 알아보기</LinkButton>
+          </TextBlock>
+
+          <ChatWindow>
+            <ChatMe>엄마 나 오늘 완전 <span className="point">스불재</span>였어 ㅠㅠ</ChatMe>
+            <Translation initial={{ x: -20, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} translation={{ delay: 0.5 }}>
+              <div className="head">두쫀쿠 번역</div>
+              <div className="word">스불재 <span style={{fontWeight:400}}> 스스로 불러온 재앙</span></div>
+              <div className="mean">= 자초한 힘든 상황</div>
+            </Translation>
+            <ChatMom>아 그런 뜻이었구나! 고생했네 우리 아들~</ChatMom>
+          </ChatWindow>
+        </SplitSection>
 
         <SectionBox>
           <h2>실시간 인기 유행어 랭킹</h2>
