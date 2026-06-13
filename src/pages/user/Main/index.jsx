@@ -185,11 +185,37 @@ const Char = styled(motion.span)`
   color: #2b6c00;
 `;
 
-/* 섹션 1의 클라우드 컴포넌트 */
+const BlurCircle = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  -webkit-filter: blur(60px);
+  z-index: 0;
+  opacity: 0.8;
+`;
+
+const BackgroundGreen = styled(BlurCircle)`
+  width: 40%;
+  height: 40%;
+  background-color: #c7ffbc;
+
+  top: 10%;
+  left: 7%;
+`;
+const BackgroundRed = styled(BlurCircle)`
+  width: 30%;
+  height: 30%;
+  background-color: #fc00008b;
+  bottom: 10%;
+  right: 20%;
+`;
+
 const StickerCloud = styled.div`
+  background-color: rgba(255, 255, 255, 0.5);
+
   flex: 1;
   position: relative;
-  height: 450px;
+  height: 500px;
   min-width: 550px;
   width: 100%;
 
@@ -438,6 +464,9 @@ function Main() {
           </TextBlock>
 
           <StickerCloud>
+            <BackgroundGreen />
+            <BackgroundRed />
+
             {topStickers.map((item, idx) => (
               <Sticker
                 key={idx}
@@ -448,10 +477,23 @@ function Main() {
                 $top={stickerPos[idx].top}
                 $left={stickerPos[idx].left}
                 style={{ rotate: stickerPos[idx].rot }}
-                whileHover={{ scale: 1.1, zIndex: 10, rotate: 0 }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: idx * 0.1, type: "spring" }}
+                whileHover={{ scale: 1.1, zIndex: 10, rotate: 0, y: 0 }}
+                initial={{ scale: 0, opacity: 0, y: 0 }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                  y: [0, -12, 0],
+                }}
+                transition={{
+                  scale: { delay: idx * 0.1, type: "spring" },
+                  opacity: { delay: idx * 0.1 },
+                  y: {
+                    duration: 2 + (idx % 3) * 0.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: idx * 0.1,
+                  },
+                }}
                 onClick={() => navigate(`/report/${item.id}`)}
               >
                 {item.word}
@@ -488,9 +530,10 @@ function Main() {
               엄마 나 오늘 완전 <span className="point">스불재</span>였어 ㅠㅠ
             </ChatMe>
             <Translation
-              initial={{ x: -20, opacity: 0 }}
+              initial={{ x: -30, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              translation={{ delay: 0.5 }}
+              translation={{ delay: 1.9 }}
+              viewport={{ once: true, amount: 1 }}
             >
               <div className="head">두쫀쿠 번역</div>
               <div className="word">
