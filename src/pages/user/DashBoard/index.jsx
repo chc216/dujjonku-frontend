@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import RankingCard from "@/pages/user/DashBoard/RankingCard";
 import TodayWordCard from "@/pages/user/DashBoard/TodayWordCard";
-import PageLayout from "@/components/layout/PageLayout"
+import PageLayout from "@/components/layout/PageLayout";
 
 /* PageLayout으로 인한 삭제
 const PageWrapper = styled.div`
@@ -23,88 +23,120 @@ const ContentWrapper = styled.main`
 `;
 */
 
-const HeaderContent = styled.div`    
-    div {
-        color: #1B1C1C;
-        font-family: "Plus Jakarta Sans";
-        font-size: 32px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 125%;
-    }
-    
-    p {
-        color: #3F4A36;
-        font-family: "Nunito Sans";
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 144.444%;
-    }
+const HeaderContent = styled.div`
+  div {
+    color: #1b1c1c;
+    font-family: "Plus Jakarta Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 125%;
+  }
+
+  p {
+    color: #3f4a36;
+    font-family: "Nunito Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 144.444%;
+  }
 `;
 
 const Padding = styled.div`
-    height: 35px;
+  height: 35px;
 `;
 
 /* 서버 통신 실패 시 나타나는 더미 데이터 */
 const fallbackWordData = Array.from({ length: 30 }, (_, i) => ({
-    id: i+1,
-    keyword: `서버 연결 대기중 ${i+1}`,
-    description: "백엔드 서버 켜주세요!",
-    trend: i%3 === 0 ? 'UP' : i%3 === 1 ? 'DOWN' : 'HOLD'
+  id: i + 1,
+  keyword: `서버 연결 대기중 ${i + 1}`,
+  description: "백엔드 서버 켜주세요!",
+  trend: i % 3 === 0 ? "UP" : i % 3 === 1 ? "DOWN" : "HOLD",
 }));
 
+const BlurCircle = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  -webkit-filter: blur(60px);
+  z-index: 0;
+  opacity: 0.8;
+`;
+
+const BackgroundGreen = styled(BlurCircle)`
+  width: 50%;
+  height: 50%;
+  background-color: #daf9d4;
+
+  top: 15%;
+  right: 0%;
+`;
+const BackgroundRed = styled(BlurCircle)`
+  width: 30%;
+  height: 30%;
+  background-color: #fc00008b;
+  bottom: 10%;
+  right: 20%;
+`;
+
 function DashBoard() {
-    const [rankingData, setRankingData] = useState([]);
+  const [rankingData, setRankingData] = useState([]);
 
-    useEffect(() => {
-        const fetchRanking = async () => {
-            try {
-                /* 스프링부트 URL (랭킹) 채워넣기 */
-                const response = await axios.get("http://localhost:8080/ranking");
+  useEffect(() => {
+    const fetchRanking = async () => {
+      try {
+        /* 스프링부트 URL (랭킹) 채워넣기 */
+        const response = await axios.get("http://localhost:8080/ranking");
 
-                /* 데이터가 배열이고, 내용이 있다면 서버 데이터 사용 */
-                if (Array.isArray(response.data) && response.data.length > 0) {
-                    const uniqueData = response.data.filter((item, index, self) =>
-                        index === self.findIndex((t) => t.id === item.id)
-                    );
+        /* 데이터가 배열이고, 내용이 있다면 서버 데이터 사용 */
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          const uniqueData = response.data.filter(
+            (item, index, self) =>
+              index === self.findIndex((t) => t.id === item.id),
+          );
 
-                    const formattedData = uniqueData.map(item => ({
-                        id: item.id,
-                        word: item.word,
-                        meaning: item.meaning,
-                        trend: item.trend === "hot" ? "hot" : item.trend === "cold" ? "cold" : "neutral"
-                    }));
-                    setRankingData(formattedData);
-                } else {
-                    /* 텅 빈 리스트라면 더미 데이터로 대체 */
-                    console.warn("데이터가 비어있음. (더미데이터)");
-                    setRankingData(fallbackWordData);
-                }
-            } catch (error) {
-                /* 서버가 죽었을 경우 더미 데이터로 대체 */
-                console.error("API 통신 실패. :", error);
-                setRankingData(fallbackWordData);
-            }
-        };
-        fetchRanking();
-    }, []);
+          const formattedData = uniqueData.map((item) => ({
+            id: item.id,
+            word: item.word,
+            meaning: item.meaning,
+            trend:
+              item.trend === "hot"
+                ? "hot"
+                : item.trend === "cold"
+                  ? "cold"
+                  : "neutral",
+          }));
+          setRankingData(formattedData);
+        } else {
+          /* 텅 빈 리스트라면 더미 데이터로 대체 */
+          console.warn("데이터가 비어있음. (더미데이터)");
+          setRankingData(fallbackWordData);
+        }
+      } catch (error) {
+        /* 서버가 죽었을 경우 더미 데이터로 대체 */
+        console.error("API 통신 실패. :", error);
+        setRankingData(fallbackWordData);
+      }
+    };
+    fetchRanking();
+  }, []);
 
-    return (
-        <PageLayout title="대시보드">
-            <HeaderContent>
-                <div>오늘도 트랜디해질 시간이에요!</div>
-                <p>오늘의 유행어, 함께 알아볼까요?</p>
-            </HeaderContent>
-            <Padding />
+  return (
+    <PageLayout title="대시보드">
+      <BackgroundGreen />
+      <HeaderContent>
+        <div>오늘도 트랜디해질 시간이에요!</div>
+        <p>오늘의 유행어, 함께 알아볼까요?</p>
+      </HeaderContent>
+      <Padding />
 
-            <TodayWordCard />
-            <Padding />
+      <TodayWordCard />
+      <Padding />
 
-            <RankingCard wordsList={rankingData} isLanding={false} />
-        </PageLayout>
-    );
+      <RankingCard wordsList={rankingData} isLanding={false} />
+    </PageLayout>
+  );
 }
 
 export default DashBoard;
