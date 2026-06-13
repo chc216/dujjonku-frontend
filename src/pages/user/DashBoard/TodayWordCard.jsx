@@ -60,7 +60,7 @@ const DetailButton = styled.button`
 /* 캐러셀 스타일 */
 const CardContainer = styled.div`
   position: relative;
-  background-color: #ffffff;
+  background-color: #ffffffc8;
   border-radius: 20px;
   box-shadow: 5px 5px 10px #ebe6e6;
   padding: 30px 20px;
