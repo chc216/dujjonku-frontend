@@ -11,6 +11,7 @@ import SubscribeCard from "./SubscribeCard";
 import QuizCard from "@/pages/user/Quiz/QuizCard";
 import { motion } from "framer-motion";
 import axios from "axios";
+import WordCardMarquee from "./WordCardMarquee";
 
 /* 이후 백엔드 연동시 서버에서 5 or 10개만 가져오도록 변경 */
 const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
@@ -21,11 +22,48 @@ const DummyRankingData = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 const PageWrapper = styled.div`
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   min-width: 100px;
   margin: 0;
+  background-color: #f7faf5;
+`;
+
+const PageBlur = styled.div`
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  -webkit-filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+`;
+
+const BlurTop = styled(PageBlur)`
+  width: 400px;
+  height: 400px;
+  background-color: #a8e063;
+  opacity: 0.4;
+  top: 200px;
+  left: -80px;
+`;
+const BlurMid = styled(PageBlur)`
+  width: 450px;
+  height: 450px;
+  background-color: #c7ffbc;
+  opacity: 0.35;
+  top: 45%;
+  right: -100px;
+`;
+const BlurLow = styled(PageBlur)`
+  width: 380px;
+  height: 380px;
+  background-color: #56ab2f;
+  opacity: 0.25;
+  bottom: 300px;
+  left: 10%;
 `;
 
 const FixedContainer = styled.div`
@@ -57,6 +95,8 @@ const RandingLogoContent = styled.div`
 `;
 
 const RandingContainer = styled.div`
+  position: relative;
+  z-index: 1;
   flex: 1;
   min-width: 600px;
   margin-top: 50px;
@@ -74,7 +114,8 @@ const SectionBox = styled(motion.section)`
   justify-content: center;
   text-align: center;
 
-  /* 얼룩말 무늬 (배경색 흰색, 옅은 회색) */
+  /* 얼룩말 무늬 (배경색 흰색, 옅은 회색) -> 블러 효과로 변경 */
+
   &:nth-child(even) {
     background-color: #fafafa;
   }
@@ -415,6 +456,9 @@ function Main() {
 
   return (
     <PageWrapper>
+      {/* <BlurTop /> */}
+      {/* <BlurMid /> */}
+      {/* <BlurLow /> */}
       <FixedContainer>
         <RandingLogoContent onClick={toTopPage}>Dujjonku</RandingLogoContent>
       </FixedContainer>
@@ -627,6 +671,7 @@ function Main() {
             <SubscribeCard />
           </motion.div>
         </SectionBox>
+        <WordCardMarquee />
 
         <SectionBox
           variants={containerVariants}
