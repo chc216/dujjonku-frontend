@@ -1,5 +1,19 @@
 import React, {useState} from 'react';
 import styled from 'styled-components'
+import ReactDom from 'react-dom';
+
+const ModalOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+`;
 
 const ModalContentContainer = styled.div`
   background: white;
@@ -85,7 +99,8 @@ function SubscribeModal({onClose}) {
         }
     };
 
-    return (
+    return ReactDom.createPortal(
+        <ModalOverlay onClick={onClose}>
         <ModalContentContainer>
             <h2>오늘의 유행어 구독하기</h2>
             <form onSubmit={handleSubmit}>
@@ -115,6 +130,8 @@ function SubscribeModal({onClose}) {
                 </ButtonContainer>
             </form>
         </ModalContentContainer>
+        </ModalOverlay>,
+        document.body
     );
 }
 
