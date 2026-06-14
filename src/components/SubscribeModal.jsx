@@ -101,7 +101,7 @@ function SubscribeModal({onClose}) {
 
     return ReactDom.createPortal(
         <ModalOverlay onClick={onClose}>
-        <ModalContentContainer>
+        <ModalContentContainer onClick={(e) => e.stopPropagation()}>
             <h2>오늘의 유행어 구독하기</h2>
             <form onSubmit={handleSubmit}>
                 <InputContainer>
